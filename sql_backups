@@ -1,0 +1,69 @@
+The Crontab:
+  30 3 * * *       pg_dump --host=127.0.0.1 --username=round_three --no-password --file=/var/db-dump/round-three.pg --format=custom round_three_production
+
+So, there's always a recent copy in `/var/db-dump`
+
+Then, we run rsnapshot (http://rsnapshot.org/) on transit-file1 to take rotating snapshots of that location
+
+tree /backup
+/backup
+|-- daily.0
+|   `-- transit-r3.ddns.umass.edu
+|       `-- var
+|           `-- db-dump
+|               `-- round-three.pg
+|-- daily.1
+|   `-- transit-r3.ddns.umass.edu
+|       `-- var
+|           `-- db-dump
+|               `-- round-three.pg
+|-- daily.2
+|   `-- transit-r3.ddns.umass.edu
+|       `-- var
+|           `-- db-dump
+|               `-- round-three.pg
+|-- daily.3
+|   `-- transit-r3.ddns.umass.edu
+|       `-- var
+|           `-- db-dump
+|               `-- round-three.pg
+|-- daily.4
+|   `-- transit-r3.ddns.umass.edu
+|       `-- var
+|           `-- db-dump
+|               `-- round-three.pg
+|-- daily.5
+|   `-- transit-r3.ddns.umass.edu
+|       `-- var
+|           `-- db-dump
+|               `-- round-three.pg
+|-- daily.6
+|   `-- transit-r3.ddns.umass.edu
+|       `-- var
+|           `-- db-dump
+|               `-- round-three.pg
+|-- hourly.0
+|   `-- transit-r3.ddns.umass.edu
+|       `-- var
+|           `-- db-dump
+|               `-- round-three.pg
+|-- hourly.1
+|   `-- transit-r3.ddns.umass.edu
+|       `-- var
+|           `-- db-dump
+|               `-- round-three.pg
+|-- weekly.0
+|   `-- transit-r3.ddns.umass.edu
+|       `-- var
+|           `-- db-dump
+|               `-- round-three.pg
+`-- weekly.1
+    `-- transit-r3.ddns.umass.edu
+        `-- var
+            `-- db-dump
+                `-- round-three.pg
+
+
+database host for UMAPS: umwebdb.umass.edu
+
+

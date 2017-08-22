@@ -1,0 +1,42 @@
+httpd is the Apache HyperText Transfer Protocol (HTTP) server program. 
+It is designed to be run as a standalone daemon process. When used like this it 
+will create a pool of child processes or threads to handle requests.
+In  general,  httpd  should  not be invoked directly, but rather should be
+invoked via apachectl on Unix-based systems or as a service on Windows NT, 2000
+and XP and as a console application on Windows 9x and ME.
+
+
+output from 
+$sudo service httpd status
+---------------------------------------
+● httpd.service - The Apache HTTP Server
+	 Loaded: loaded (/usr/lib/systemd/system/httpd.service; enabled; vendor preset: disabled)
+	 Active: active (running) since Wed 2017-07-26 15:19:17 UTC; 1 weeks 6 days ago
+		 Docs: man:httpd(8)
+					 man:apachectl(8)
+	Process: 2582 ExecStop=/bin/kill -WINCH ${MAINPID} (code=exited, status=0/SUCCESS)
+ Main PID: 2595 (httpd)
+	 Status: "Total requests: 26582; Current requests/sec: 0; Current traffic:   0 B/sec"
+	 CGroup: /system.slice/httpd.service
+					 ├─ 1131 /usr/sbin/httpd -DFOREGROUND
+					 ├─ 2595 /usr/sbin/httpd -DFOREGROUND
+					 ├─ 2627 Passenger watchdog
+					 ├─ 2630 Passenger core
+					 ├─ 2641 Passenger ust-router
+					 ├─ 5036 Passenger RubyApp: /var/www/umaps-rails/current (production)
+					 ├─ 7812 /usr/sbin/httpd -DFOREGROUND
+					 ├─ 8482 /usr/sbin/httpd -DFOREGROUND
+					 ├─ 8804 /usr/sbin/httpd -DFOREGROUND
+					 ├─ 8914 /usr/sbin/httpd -DFOREGROUND
+					 ├─18248 /usr/sbin/httpd -DFOREGROUND
+					 ├─18577 /usr/sbin/httpd -DFOREGROUND
+					 ├─18578 /usr/sbin/httpd -DFOREGROUND
+					 ├─19222 /usr/sbin/httpd -DFOREGROUND
+					 └─27520 /usr/sbin/httpd -DFOREGROUND
+
+Jul 26 15:19:17 umaps-web1.oit.umass.edu systemd[1]: Starting The Apache HTTP Server...
+Jul 26 15:19:17 umaps-web1.oit.umass.edu httpd[2595]: AH00548: NameVirtualHost has no effect and will be removed in the next release /etc/httpd/sites-enabled/hub-parking.conf:1
+Jul 26 15:19:17 umaps-web1.oit.umass.edu systemd[1]: Started The Apache HTTP Server.
+
+Apache docs:
+httpd.apache.org/docs/2.4/en/

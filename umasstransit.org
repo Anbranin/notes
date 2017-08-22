@@ -1,0 +1,9 @@
+INSTRUCTIONS
+
+1. to grab data from round_three server:
+'scp karin@umasstransit.org:name_of_file .'
+
+2. to dump new data into your round_three server
+dropdb round_three_development
+createdb -O karin round_three_development
+psql -d round_three_development -f filepath/name.sql

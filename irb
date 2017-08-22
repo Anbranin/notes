@@ -1,0 +1,3 @@
+$ irb filename.rb
+-- or --
+>> source('filename.rb)

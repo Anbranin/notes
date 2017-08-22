@@ -1,0 +1,13 @@
+To sftp into a remote host:
+  $ ftp username@remote_hostname_or_IP
+
+Getting Help
+  type 'help'
+
+to transfer files:
+  From the remote directory that you've just SFTPd into, just type
+  $ get remoteFile
+
+It will fetch it by default to the local file system in the directory you SFTPd from.
+
+look in the sftp.yml file in umaps-rails for users, passwords, and hosts.

@@ -1,0 +1,6 @@
+example select query:
+
+SELECT ENT_UID
+FROM ENTITY
+WHERE ENT_PRIMARY_ID
+IN('1','2')

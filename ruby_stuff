@@ -1,0 +1,21 @@
+`dudes.sort_by(&:name)` == `dudes.sort_by{ |dude| dude.name }` == `dudes.sort{ |a, b| a.name <=> b.name }`
+
+WOW.
+
+fragment = case interval <=> 1
+                when -1 then 'now'
+                when  0 then 'in 1 minute'
+                when  1 then "in #{interval} minutes"
+                end
+
+Anything less than 1 gives you -1, 1 gives you 0, anything greater than 1 gives
+you 1
+So it's "how" you sort things
+In the land before `sort_by` (there was no such land)
+Yep, you can pass sort any block which returns -1 / 0 / 1 and it'll use that to 
+compare and sort pairs of objects in your collection
+
+REquire a file in IRB:
+require './name_of_file'
+or
+load 'name_of_file' (reloads)
