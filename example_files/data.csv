@@ -1,0 +1,262 @@
+35,Academy of Music (E),never,false
+37,Admissions Building,2017-06-14,true
+107,Amherst College,never,false
+109,Amherst Common (N),never,false
+111,Amherst Common (S),2017-03-24,false
+113,Amherst Community Health Ctr (In),2017-03-10,false
+115,Amherst Community Health Ctr (Out),2017-03-10,false
+117,Amherst Crossing (In),2017-06-26,true
+119,Amherst Crossing (Out),2017-03-07,true
+121,Amherst Glass (In),never,false
+123,Amherst Glass (Out),2017-03-22,true
+125,Amherst Post Office,never,false
+127,Amherst Survival Center (In),2017-03-08,false
+129,Amherst Survival Center (Out),2017-07-18,true
+131,Amherst Town Hall,never,false
+133,Amity Place (In),never,false
+135,Amity Place (Out),never,false
+161,Arnold House,2017-03-08,false
+163,Atkins Farm (In),never,false
+165,Atkins Farm (Out),never,false
+167,Atkins Farm (Store Front),never,false
+171,Bagdon Farm,2017-03-22,true
+251,Bay Road (In),2017-03-27,false
+253,Bay Road (Out),2017-03-27,false
+255,Bay Road DC (E),never,false
+257,Bay Road DC (W),never,false
+295,Belchertown Center 1,2017-03-27,false
+297,Belchertown Center 2,2017-03-27,false
+441,Big Y - Amherst,never,false
+457,Bioshelter (In),2017-03-08,false
+459,Bioshelter (Out),2017-03-22,true
+461,Blanchard Hall,never,false
+551,Boyden (N),2017-03-22,false
+553,Boyden (S),2017-03-22,false
+645,Butterfield Dorm (E),never,false
+647,Butterfield Dorm (W),never,false
+809,Cedarwood Apts. (In),2017-03-27,false
+811,Cedarwood Apts. (Out),2017-03-27,false
+861,Chadbourne (N),never,false
+863,Chadbourne (S),never,false
+885,Cherry Lane,2017-07-21,true
+917,Chestnut Street (N),never,false
+919,Chestnut Street (S),2017-06-27,true
+1015,Chmura Road (N),never,false
+1017,Chmura Road (S),never,false
+1023,Churchill Street,never,false
+1025,City Line Amherst / Hadley,never,false
+1027,City Line Amherst / Hadley (Bay Rd),never,false
+1029,City Line Amherst/Belchertown,never,false
+1033,City Line Amherst/S. Hadley,never,false
+1035,City Line Belchertown/Amherst,never,false
+1041,City Line Granby/Amherst,never,false
+1043,City Line Granby/S. Hadley,never,false
+1045,City Line Hadley / Amherst,never,false
+1047,City Line Hadley / Amherst (Bay Rd),never,false
+1049,City Line Hadley / Northampton,never,false
+1051,City Line Hadley/S. Hadley,never,false
+1057,City Line Northampton / Hadley,never,false
+1059,City Line S. Deerfield/Sunderland,never,false
+1063,City Line S. Hadley/Granby,never,false
+1061,City Line S. Hadley/Granby,never,false
+1065,City Line S. Hadley/Hadley,never,false
+1067,City Line Sunderland/S. Deerfield,never,false
+1069,Cliffside,2017-03-08,true
+1095,Colonial Village (In),never,false
+1097,Colonial Village (Out),2017-03-07,true
+1099,Colonial Village / S East Street (In),2017-03-07,true
+1101,Colonial Village / S East Street (Out),2017-03-07,true
+1105,Columbia Drive (In),2017-06-08,true
+1107,Columbia Drive (Out),never,false
+1111,CompSci (Lot 26),never,false
+1113,CompSci (Lot 45),never,false
+1189,Cowles Lane,2017-03-24,false
+1195,Crestview,2017-03-22,true
+1197,Crocker Farm (In),2017-05-31,true
+1199,Crocker Farm (Out),2017-03-24,false
+1201,Cushman Center,2017-03-08,false
+1203,Cushman Day School,2017-03-08,false
+1211,Dakin House (In),never,false
+1213,Dakin House (Out),never,false
+1215,Dallas Mall (E),2017-03-22,false
+1217,Dallas Mall (W),2017-03-22,false
+1219,Damon Road,2017-06-08,true
+1221,Day School (N),never,false
+1223,Day School (S),never,false
+1227,Diane Lane (In),2017-03-27,false
+1229,Diane Lane (Out),2017-03-27,false
+1285,Dickinson Dorm,2017-06-14,true
+1287,Dickinson Farm Road (In),2017-05-31,true
+1289,Dickinson Farm Road (Out),2017-06-07,true
+1451,Emerson Court (In),2017-03-27,false
+1453,Emerson Court (Out),2017-03-27,false
+1455,Eric Carle Museum  (In),2017-05-31,true
+1457,Eric Carle Museum (Out),2017-05-31,true
+1469,Fairfield Street,2017-03-08,false
+1471,Fearing Street (In),2017-03-07,true
+1473,Fearing Street (Out),2017-03-24,false
+1495,Fine Arts Center,2017-03-08,false
+1587,Garage Road (In),never,false
+1589,Garage Road (Out),2017-03-08,false
+1591,Gatehouse Road (In),2017-03-27,false
+1593,Gatehouse Road (Out),2017-03-27,true
+1607,Glenns Glen (In),2017-03-27,false
+1609,Glenns Glen (Out),2017-03-27,false
+1619,Goten Restaurant,2017-06-13,true
+1635,Granby Heights Apts. (In),2017-06-07,true
+1637,Granby Heights Apts. (Out),2017-06-07,true
+1641,Grantwood Drive,2017-03-08,false
+1677,Gray Street (In),2017-06-14,true
+1679,Gray Street (Out),never,false
+1681,Grayson Dorm,2017-06-14,true
+1683,GRC,2017-03-08,false
+1685,Greenleaves Drive,2017-03-22,false
+1697,Gulf Road (In),2017-03-27,false
+1699,Gulf Road (Out),2017-03-27,false
+1703,Hadley Street (N),never,false
+1705,Hadley Street (S),never,false
+1707,Haigis Mall,2017-03-08,false
+1709,Hall Drive,2017-03-07,true
+1729,Hampshire College,2017-06-01,true
+1749,Hartsbrook School (E),never,false
+1751,Hartsbrook School (W),never,false
+1761,HC Campus Police (E),never,false
+1763,HC Campus Police (W),never,false
+1767,Heatherstone Road (In),2017-03-27,true
+1769,Heatherstone Road (Out),2017-03-27,false
+1809,Hildebrand's Hideaway,never,false
+1825,Holland Glen (In),2017-03-27,false
+1827,Holland Glen (Out),2017-03-27,false
+1905,Integrative Learning Center,2017-03-08,false
+1943,Jones Library (In),never,false
+1945,Jones Library (Out),2017-03-22,true
+2013,Laurenitis Farm Stand (In),2017-03-22,true
+2015,Laurenitis Farm Stand (Out),2017-03-22,true
+2101,Lincoln Avenue (In),never,false
+2103,Lincoln Avenue (Out),never,false
+2135,Logtown Road (In),never,false
+2137,Logtown Road (Out),2017-03-07,true
+2203,Lot 13,never,false
+2205,Lot 25,2017-03-22,false
+2207,Lot 33 (E),never,false
+2209,Lot 33 (W),never,false
+2233,Lynn Drive (In),2017-06-01,true
+2235,Lynn Drive (Out),2017-06-01,true
+2641,Market Hill Road,2017-03-22,true
+2645,Mary Woolley Hall,never,false
+2653,Masonic St / Academy of Music (W),never,false
+2663,Mayflower Apts. (In),2017-03-27,false
+2665,Mayflower Apts. (Out),2017-03-27,false
+2779,Memorial Drive (In),2017-06-08,true
+2781,Memorial Drive (Out),2017-06-01,true
+2793,MHC Museum,never,false
+2795,Middle Street / Rt 47 (E),never,false
+2797,Middle Street / Rt 47 (W),never,false
+2817,Mill Hollow Apts.,2017-03-22,true
+2819,Mill Street (In),2017-06-01,true
+2821,Mill Street (Out),2017-03-07,true
+2845,Morrill Science Center,2017-03-08,false
+2859,Mountain Road (Out),2017-03-08,false
+2861,Mullins Center (N),2017-03-08,false
+2863,Mullins Center (S),2017-03-22,false
+2915,North Amherst (In),2017-03-22,true
+2917,North Amherst (Out),2017-03-22,true
+2921,North Street (In),2017-03-27,false
+2923,North Street (Out),2017-03-27,false
+2925,North Village,2017-03-22,false
+2947,Northampton Court House,never,false
+2953,Northampton Post Office,never,false
+2993,NOT A STOP,never,false
+2995,Notch Visitors Center (In),2017-03-29,false
+2997,Notch Visitors Center (Out),2017-06-01,true
+3009,Oak Knoll (In),2017-03-27,false
+3011,Oak Knoll (Out),2017-03-27,false
+3013,Old Belchertown Road,never,false
+3015,Old Belchertown Road (Out),never,false
+3017,Old Belchertown Road 2,2017-03-07,true
+3127,Park / Church,never,false
+3137,Park Street,2017-03-29,false
+3221,Pine Street,2017-07-17,true
+3225,Pioneer Valley Apts.,2017-03-22,true
+3357,Plumtree Road (In),2017-03-08,false
+3359,Plumtree Road (Out),2017-03-22,true
+3361,Pomeroy Lane (In),2017-03-22,true
+3363,Pomeroy Lane (Out),2017-03-22,true
+3365,Pomeroy Terrace,never,false
+3369,Potwine Lane (In),never,false
+3371,Potwine Lane (Out),2017-03-24,false
+3373,Pray Street (In),never,false
+3375,Pray Street (Out),2017-03-24,false
+3391,Prospect Street,never,false
+3395,Puffton Village 1,2017-03-08,false
+3397,Puffton Village 2,2017-03-08,true
+3399,Pulpit Hill Road 1,2017-07-12,true
+3401,Pulpit Hill Road 2,2017-07-14,true
+3405,Quabbin Village (In),2017-03-27,false
+3407,Quabbin Village (Out),2017-03-27,false
+3413,R.W. Kern Center (In),never,false
+3415,R.W. Kern Center (Out),2017-03-22,true
+3481,Riverside Park Plaza,2017-07-17,true
+3499,Rolling Green (In),2017-03-07,true
+3501,Rolling Green (Out),2017-03-07,true
+3527,Russell / Middle (E),never,false
+3529,Russell / Middle (W),never,false
+3639,Sand Hill Road,2017-03-22,true
+3689,School of Education,2017-03-08,false
+3709,Sheerman Lane,2017-07-14,true
+3711,Sheldon Field (E),never,false
+3713,Sheldon Field (W),never,false
+3727,Silver Lane,2017-03-08,false
+3729,Silver Street (In),2017-06-01,true
+3731,Silver Street (Out),2017-06-01,true
+3737,Skinner Mountain (N),never,false
+3739,Skinner Mountain (S),never,false
+3743,Smith College,never,false
+3763,South Deerfield Center,2017-03-08,false
+3783,Southpoint,2017-06-08,true
+3785,Southwest Shelter,never,false
+3787,Southwest/University Drive (N),2017-03-22,false
+3789,Southwest/University Drive (S),2017-03-22,false
+3791,Spencer Street (In),never,false
+3793,Spencer Street (Out),never,false
+3953,Squire Village (In),2017-03-22,true
+3959,Stadium (N),2017-03-22,false
+3961,Stadium (S),2017-03-22,false
+4053,State Street,2017-03-22,true
+4071,Stone Shelter,never,false
+4073,Stony Hill (In),2017-03-27,false
+4075,Stony Hill (Out),2017-03-27,false
+4107,Stop and Shop - Hadley,never,false
+4145,Studio Arts Building,2017-03-08,false
+4153,Sugarloaf Estates,2017-03-08,false
+4157,Sugarloaf Street (Out),2017-03-08,false
+4233,Sunderland Center,2017-03-08,false
+4235,Sunderland Center (S. Deerfield bound),never,false
+4241,Sylvan (In),2017-06-22,true
+4243,Sylvan (Out),2017-06-22,true
+4253,Thayer Street (In),2017-03-27,false
+4255,Thayer Street (Out),2017-03-27,false
+4257,The Boulders,never,false
+4259,The Brook (In),2017-06-08,true
+4261,The Brook (Out),2017-06-08,true
+4265,The Mill District,2017-03-08,false
+4295,Tilson Farm (In),2017-06-22,true
+4297,Tilson Farm (Out),2017-06-22,true
+4315,Totman Gym (In),2017-03-08,false
+4317,Totman Gym (Out),2017-06-26,true
+4321,Townehouse Apts. (In),2017-03-22,true
+4323,Townehouse Apts. (Out),2017-03-22,true
+4325,Triangle Street (In),never,false
+4327,Triangle Street (N),never,false
+4333,UMass Bus Garage,never,false
+4401,Valley Medical,never,false
+4415,Village Park (N),never,false
+4417,Village Park (S),never,false
+4419,Visitors Center,never,false
+4487,Warren Wright Road (In),2017-03-27,false
+4489,Warren Wright Road (Out),2017-03-27,false
+4655,WFCR,2017-03-08,false
+4657,Whately Park 'n Ride,2017-03-08,false
+4863,Woodhaven Drive (In),2017-03-27,false
+4865,Woodhaven Drive (Out),2017-03-27,false
+4909,Yellow Lot 12,2017-03-22,true
