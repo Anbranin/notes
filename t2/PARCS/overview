@@ -1,0 +1,15 @@
+Coupons:
+
+  Really long (365) expiration date on validations for validation providers
+  Manually close out validations after event is finished
+  Future: Could do so with capybara
+
+Flat fee discounts:
+  receipt
+
+------
+  D = [(receipt_amnt - 6.50), 0].max
+  FINANCIAL_TRANSACTION WHERE TAB_UID = 381
+------
+
+TOTAL_CHARGE = INVOICE_AMT - D

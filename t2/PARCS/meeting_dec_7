@@ -1,0 +1,35 @@
+Having trouble paying attention - might be coming down with Doug's cold
+
+Permit number ranges need to be set up for retirees, OPPs, guests - can use the same number range
+Plus we need a PNR for university vehicles - have to be inventoried.
+
+Check box for "can add value after sold" on Permit Control Group
+If you want it to be added value
+
+OPP Occasional parker - default value
+Can be sold with value different from default should not be checked either.
+
+Standard task in Flex import to third party
+There has to be an amount due
+Generate second invoice (customer task letter) (recreating third party invoices
+in the customer letter template)
+Use the cusomter task letter template
+pull in the invoice amount, account balance which is the credit,
+and show them the total
+calculation would be done in formulas on crystal report
+
+"IMPORT THIRD PARTY PAYMENT" is the task
+
+Is a customer letter a type of letter? YES
+Recreate the invoice from this letter template
+Have to do it from crystal reports?
+
+How to charge
+Flat fee
+
+Customer pays:
+transactions:
+if charge is less than 6.50,  
+  up to 6.50, customer or department payed
+  over 6.50 we discount to either customer or 3rd party
+

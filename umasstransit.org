@@ -7,3 +7,5 @@ INSTRUCTIONS
 dropdb round_three_development
 createdb -O karin round_three_development
 psql -d round_three_development -f filepath/name.sql
+OR
+gunzip file_path.sql stdout | psql -d round_three_development

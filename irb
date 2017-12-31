@@ -1,3 +1,7 @@
 $ irb filename.rb
 -- or --
 >> source('filename.rb)
+-- or --
+require './filename.rb'
+-- then, to reload the file if you changed it --
+load ('./filename.rb')

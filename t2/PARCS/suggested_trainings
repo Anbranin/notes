@@ -1,0 +1,17 @@
+
+1. Monitoring System - anyone responding to intercom calls from the lanes, monitoring lane/device 'health' and responding to Level 1 service such as ticket jams, etc. Also, any office staff who may monitor/update occupancy counts for access control or assist in troubleshooting hardware/software issues related to access control
+2.       PARCS Cashier Station - anyone who will maintain the cashier station options as well as users of the T2 Flex Cashier Station for transient payments in the garage
+3.       PARCS Configuration - Flex admin who will assist in the Flex configuration required to prepare for the hardware installation and permit configuration changes
+4.       PARCS Encoding Station - anyone who will be creating printable mag-stripe encoded validations using the Encoding Station software
+5.       PARCS POS Configuration - Flex admin who will assist in Flex configuration required to prepare for the hardware installation
+6.       PARCS Series II Maintenance - level 1 hardware maintenance
+7.       PARCS Task Scheduler - Flex admin who schedules, maintains and manages tasks in Flex Task Scheduler
+8.       Release 7.3
+a.       FlexVal (Validation Providers) - anyone interested in reviewing the functionality of the Validation Provider solution in Flex/FlexPort
+9.       PARCS Validations and Coupons
+a.       Release 15.3 - Validation Enhancements - Flex Admin/anyone interested in the validation options available for use as well as Flex configuration
+10.   PARCS Value Permits - another credential type available for use in the T2 PARCS environment (may or may not use)
+11.   Third Party Manager
+a.       Release 7.7 Third Parties - If UMASS is interested in billing departments internally for validation use or sales of validations, Third Party functionality in Flex is what is used for invoicing; Flex admin who will assist in Flex configuration required to implement this functionality in Flex
+
+- Training for the cash register teaches you about value permits

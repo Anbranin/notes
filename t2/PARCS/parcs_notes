@@ -1,0 +1,29 @@
+First of all, what does PARCS stand for?
+
+Parking Access Revenue Control System (those standing things)
+
+
+LANE CONTROLLER INFORMATION
+  3 loop sensors
+  card terminator = carriage return
+
+ADDING GARAGE LANES
+  T2 credit card exit station
+
+CONFIGURING LANE CONTROLLERS
+  Facility -> add lanes -> add lane controllers
+  
+  CONFIGURE PAY STATIONS
+  - have barcode readers, low cash warnings
+
+CONFIGURING POSSTATION
+  Barcode Reader port B
+  Offline timeout 15 seconds
+  Online Timeout 5 seconds
+  Upper Garage
+
+  For Central Cashier there is no lane
+
+The facility settings for hourly rates are crazy complicated
+
+What are DCS
