@@ -76,7 +76,13 @@ For a cheatsheet, please go [here](https://www.cheatography.com/davechild/cheat-
   Pairs of parentheses are numbered by counting open parentheses from the left.
   
   Please note: egrep considers each line in isolation, so it won't be able to find repetitions spanning lines.
-### Escape Character \
-  If you're trying to find a literal character that's used as a metacharacter, you need to escape it.
+### Escape Character: \
+  - If you're trying to find a literal character that's used as a metacharacter, you need to escape it.
   For example, if you wanted to find a literal `?` in your text, rather than using it to indicate an optional item,
-  you'd need to _escape_ it first.
+  you'd need to _escape_ it first. So, looking for all questions in your text? use `[A-Za-z]+\?`
+  You can do this with all metacharacters, but *not* within a character class. Want to find a word within parentheses?
+  use `\([A-Za-z]\)`.
+### Common Examples
+  - Variable names: 
+  `[A-Za-z_][a-zA-Z_0-9]*`
+  
