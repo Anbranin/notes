@@ -1,1 +1,8 @@
+Dollars with optional cents:
+Dollars with cents: $1.75
+thousand dollars $1,000
+one dollar no cents $1
+just a dollar sign $
 
+One two three these are letters
+3

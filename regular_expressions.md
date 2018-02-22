@@ -1,9 +1,11 @@
 For a cheatsheet, please go [here](https://www.cheatography.com/davechild/cheat-sheets/regular-expressions/)
-# Egrep
+# grep -E
+- Basic usage: $grep -E 'expression' file
+- Note the SINGLE QUOTES (that was a headache to find out)
 ## metacharacters
 ### Lines: ^ $
-  - `^` match beginning of line `$` match end of line. These are only
-  metacharacters outside of a character class.
+  - `^` match beginning of line `$` match end of line.
+  - They only mean this outside of a character class
 ### Character Classes: []
   - `[]` lets you list characters you want to allow at that point in the match.
   For example, `[ea]` lets you match either `e` or `a`.
@@ -14,18 +16,19 @@ For a cheatsheet, please go [here](https://www.cheatography.com/davechild/cheat-
   `H<[1-6]>` matches `<h1>` or `<h2>` etc
   `[A-Z]` any single uppercase letter
   `[a-z]` any single lowercase letter.
-  Please note that a dash is only a metacharacter _within_ a character class,
-  and when it is not the first letter in a character class.
+  - only a metacharacter within a character class when it is _not_ the first character.
 ### Negation: ^
   - `[^1-6]` matches any character that is NOT 1-6. It negates the list.
   Note that the caret within a character class means something entirely
-  different than when it is outside. It is only special when it is immediately
-  within a class's opening bracket, not within.
+  different than when it is outside.
   - Common Gotcha: A negated character class is not "match unless there is the thing",
   it means "match anything that is not the thing". The difference is subtle.
+  - only carries this meaning within a character class when it is the first character.
+  - outside of a character class matches the beginning of line.
 ### Match any single character: .
-  - The dot matches any character, when it is outside of a character class.
+  - The dot matches any _single_ character
   Searching for a date `01.01.17` will include "01.01.17" and "01/01/17".
+  - Only meaningful _outside_ of a character class.
 ### Alternation: | "OR"
   - `Bob|Robert` matches _either_ "Bob" or "Robert." We can do `gr(e|a)y` like in
   our previous example, using parentheses to *constrain* the alternation.
@@ -34,14 +37,16 @@ For a cheatsheet, please go [here](https://www.cheatography.com/davechild/cheat-
   SINGLE character in the target text. With alternation, each alternative
   can be a full-fledged regular expression.
 ### Case insensitive search
-  - egrep has the flag `-i` to search case insensitive. It's not "pure" regex
+  - grep has the flag `-i` to search case insensitive. It's not "pure" regex
   but damn it's useful.
 ### Word Boundaries: <>
-  - Some versions of egrep support the `\<` start of word and `\>` end of word
-  metacharacters. Not all of them do. You could construct your own based on the
+  - What you can use for word boundary matching depends on your particular flavor of regex.
+  - some support the `\<` start of word and `\>` end of word
+  metacharacters. `\<cat\>` finds "cat" as a word, not as part of "cathartic", for example.
+  - Some flavors have the catchall `\b` metacharacter instead.
+  - You could construct your own based on the
   fact that "Start of word" simply means "Place where an alphanumeric set of characters starts" and
   "end of word" means the opposite.
-  `\<cat\>` finds "cat" as a word, not as part of "cathartic", for example.
 ### Optional Items: ?
   - `?` is a *quantifier*
   - Say we wanted to match "color." Sometimes it's spelled "colour". We can use the optional `?` to match either of them.
@@ -52,6 +57,7 @@ For a cheatsheet, please go [here](https://www.cheatography.com/davechild/cheat-
   - `+` and `*` are also *quantifiers*
   - `+` means "Match one or more of the immediately preceeding item." Will fail if no matches are found.
   - `*` means "Match zero or more of the immediately preceeding item." Will never fail.
+  - These are only metacharacters outside of a character class.
 ### Interval Quantifier: {min,max}
   - Some versions of egrep support interval quantifiers, allowing you to specify your own minimum and maxiumum
   quantifier (how many instances of a character we are allowed to see). For example:
@@ -75,14 +81,22 @@ For a cheatsheet, please go [here](https://www.cheatography.com/davechild/cheat-
   ```
   Pairs of parentheses are numbered by counting open parentheses from the left.
   
-  Please note: egrep considers each line in isolation, so it won't be able to find repetitions spanning lines.
+  Please note: if your flavor considers each line in isolation, it won't be able to find repetitions spanning lines.
 ### Escape Character: \
   - If you're trying to find a literal character that's used as a metacharacter, you need to escape it.
   For example, if you wanted to find a literal `?` in your text, rather than using it to indicate an optional item,
   you'd need to _escape_ it first. So, looking for all questions in your text? use `[A-Za-z]+\?`
   You can do this with all metacharacters, but *not* within a character class. Want to find a word within parentheses?
   use `\([A-Za-z]\)`.
+  - only a metacharacter NOT within a character class.
 ### Common Examples
-  - Variable names: 
-  `[A-Za-z_][a-zA-Z_0-9]*`
-  
+  - Variable names: `[A-Za-z_][a-zA-Z_0-9]*` Of course, this will find every word.
+  - A string within double quotes: `"[^"]*"` That's a very simple solution eh? You _could_ write something that allows double
+  quotes if they are escaped with a backslash. That's more complex. We'll get to it later?
+  - Dollar amount (with optional cents): `\$[0-9]+(.[0-9]{0,2})?`
+## Terms
+  - Regex: pronounced with a hard g
+  - Matching: You don't match words, you match characters
+  - Flavor: Like a dialect. Different tools can use the same flavor or different flavors, so don't get those terms confused
+  - Character: The value of a byte is the same across any context. However, the character that that value represents is
+  entirely a matter of interpretation, or _encoding_.

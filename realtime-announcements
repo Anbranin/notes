@@ -1,0 +1,30 @@
+intention:
+Any time there's a businfo board you must relay that information in hearing
+
+
+using the PVTA realtime feed - deployed at westfield / holyoke transportation center
+whenever there's a bus arriving in 5 minutes it announces it
+uses wav files coordinated with realtime feed
+monitors the feed & monitors all departures for a stop/set of stops
+
+uses Whenever
+-----
+Schedule.rb
+
+Every minute after 5AM until 3am it looks at the feed
+It remembers all the buses that previously were 6 or more minutes away
+and announces when it's 5 or less away (so they only get announced once)
+
+git pull at 4am & update crontab
+
+Source code is in one file - we should arrange it in different classes
+
+stops.txt contains stop_ids for the bays you want to monitor
+maintain a cache of feed - json cached_departures
+
+def run is where it's at
+
+In the -voice- directory is contained the wav files that the individual
+supervisors should be updating (kept on GH)
+
+
