@@ -1,0 +1,26 @@
+Annual Credit Card Merchant Meeting
+
+Who needs to undergo PCI training? 
+Anyone who operates POS (point of sale) terminals (Cashiers).
+
+Vantiv - First Data
+the new POS terminal there is a cost. do we need to switch?
+
+General Data Protection Regulation (GDPR)
+- if you store information about a person that makes them identifiable, 
+they have a right to be forgotten (purged from your system). It affects any EU citizens and US citizens living in the EU. So
+it will affect international programs. It will also affect us since we track user information - on Flex, mostly.
+We need to have a plan in place to purge user information in the case of a request.
+Since we use an outside vendor we'd need to request it. This thing is new and evolving, so not much is known about how to be compliant
+when using an outside vendor. THINK ABOUT: Round three and erasure. But we are already compliant because we can just go
+remove the person from the db entirely if they request it.
+
+Self assessment questionairre: must answer YES to all the questions.
+
+new merchants: 
+- Contract review, if on the cloud, another set of requirements for vendor data centers
+- external qualified security assessor reivew
+- substantial changes may need all the same (new hosted to hosted or vice versa)
+- substantial rewrite or reprogramming
+- change in processor vendor
+- any change to your device IPS or other network changes must notify pci@admin.umass.edu
