@@ -100,3 +100,44 @@ For a cheatsheet, please go [here](https://www.cheatography.com/davechild/cheat-
   - Flavor: Like a dialect. Different tools can use the same flavor or different flavors, so don't get those terms confused
   - Character: The value of a byte is the same across any context. However, the character that that value represents is
   entirely a matter of interpretation, or _encoding_.
+# Perl
+  Developed in the late 80's, the concepts of text handling/regex are derived from sed and awk. Use: Text handling,
+  web-related processing.
+  Example code:
+  ```
+  $celsius = 30;
+  $fahrenheit = ($celsius * 9 / 5) + 32;
+  print "$celsius C is $fahrenheit F.\n"
+  ```
+  this returns "30 C is 86 F \n"
+  Could also write something with control flow:
+  ```
+  $celsius = 20;
+  while ($celsius <= 45)
+  {
+    $fahrenheit = ($celsius * 9 / 5) + 32;
+    print "$celsius C is $fahrenheit F.\n"
+    $celsius = $celsius + 5
+  }
+  ```
+  I think in the above example you could put the fahrenheit calculation outside of the while loop to make it faster.
+  Can save this file and run it like so:
+  `$ perl -w file_name`.
+  The -w is not necessary, but it tells perl to check your syntax and issue warnings about what it finds.
+## Perl and regular expressions
+  Simplest way: Check if a variable holds some text.
+  ```
+  if ($reply =~ m/^[0-9]+$/) {
+    print "Only digits here\n"
+  } else {
+    print "Not only digits!"
+  }
+  ```
+  the `/m` tells Perl "Regular expression match"
+  the slashes `//` denote the expression itself.
+  the `=~` links `/m` with the string to be searched (the variable $reply in this case)
+  Operators:
+  - `=~` -- links a regex search with a target string
+  - `=` -- variable assignment
+  - `==` -- checks equality between numbers
+  - `eq` -- checks equality between strings
