@@ -130,14 +130,28 @@ For a cheatsheet, please go [here](https://www.cheatography.com/davechild/cheat-
   if ($reply =~ m/^[0-9]+$/) {
     print "Only digits here\n"
   } else {
-    print "Not only digits!"
+    print "Not only digits!\n"
   }
   ```
   the `/m` tells Perl "Regular expression match"
   the slashes `//` denote the expression itself.
-  the `=~` links `/m` with the string to be searched (the variable $reply in this case)
+  the `=~` links `m/` with the string to be searched (the variable $reply in this case)
   Operators:
-  - `=~` -- links a regex search with a target string
+  - `=~` -- links a regex search with a target string (you can read it as "matches")
   - `=` -- variable assignment
   - `==` -- checks equality between numbers
   - `eq` -- checks equality between strings
+  `($reply ~= m/^[0-9]+$/)` returns true or false. The surrounding ^..$ (beginning/end of word) ensures it is _only_ digits. Without the surroundings, it would match
+  if there were a digit _anywhere_ in the string.
+  Combining the last two examples:
+  ```
+  print "Enter a temperature in Celcius:\n";
+  $celcius = <STDIN>; # this reads one line from the user
+  chomp($celcius) # removes the newline from the user-entered string
+  if ($reply =~ m/^[0-9]+$/) {
+    $fahrenheit = ($celsius * 9 / 5) + 32;
+    print "$celsius C is $fahrenheit F.\n";
+  } else {
+    print "I was expecting a number, so \"$celcius\" won't work.\n"'
+  }
+  ```
