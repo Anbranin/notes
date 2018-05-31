@@ -155,3 +155,13 @@ For a cheatsheet, please go [here](https://www.cheatography.com/davechild/cheat-
     print "I was expecting a number, so \"$celcius\" won't work.\n"'
   }
   ```
+  Two notes:
+  1. If it's a floating point number, you may want to use `printf`:
+  `printf "%.2f C is %.2f F"`
+  2. The backslashes escape the quotes to be printed, that's all.
+  3. If you passed a negative or float to this function (which doesn't contain _only_ numbers), you'd be in a rough way.
+  Let's do things this way then:
+  ```
+  =~ m/^[+-]?[0-9]+(\.[0-9]*)?$/
+  ```
+  
