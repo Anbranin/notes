@@ -1,0 +1,28 @@
+our homepage:
+  https://umafm.maps.arcgis.com/home/index.html
+
+History of GIS
+keep track of assets
+with layers - like in illustrator
+book - "Charting the Unknown"
+shapes
+SQL
+remember projections - mapbox (GIS company) has their own way of fixing it
+
+Collector - direct editing of feature layer
+Survey123 - form builder. It's a survey that's a form.
+can be used to gather information about, as an example, spots in a lot.
+You design a survey with an excel form, it has templates..
+feature class = what type of object / layer it is
+book - "Modeling our world" (guide to geodatabase design)
+
+REST API? 
+https://learn.arcgis.com/en/projects/get-started-with-arcgis-online/
+I think I can steal the ArcGIS book from Sasha
+
+Lot
+citation zone - facility
+citation location
+
+What about names? Attach name to Citation Location, and to Citation Zone.
+

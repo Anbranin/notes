@@ -1,0 +1,43 @@
+GIS feature layer - parking - assets
+
+Querying the GIS database is what we're talking about. 
+Data file: An example data set. Citation location, number of citations, whatever we'd be using.
+If you provide time location type and also amount of citations - 
+
+How long does it take to create a query on GIS - 5 mins? I have trouble paying attention
+
+Why do we need to query GIS database
+We're pulling data from Flex anyways..
+Are we thinking that people could 
+
+SQL export?
+
+page on hub
+choose filters
+submit
+create file on backend
+send to PDF
+print report
+
+Whole AFS 
+user group
+
+filtering expport process on your side it goes to the AFS system 
+Tririga
+bike racks 
+how people refer to parking ares? need to make sure asset IDS are there so we can link
+what is tririga
+Electrical light bulbs- who is doing it interlaly ? Tririga
+
+Attributes are all null rn 
+Location Meter number we
+citation location 
+once we sort out the sections
+make that layer available and go in and enter the data 
+We have a spreadsheet of parkmobile zones, and we can link them to Citation Locations.
+You can update the ParkMobile ID file 
+FacilityID and color table need to give Madelleine - not all Facility IDs will have color
+
+Asset Management
+
+
