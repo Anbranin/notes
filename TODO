@@ -1,20 +1,9 @@
-general--------
+- bicycle registration setup
 
-- clean up time machine routes
+Finish testing umaps-rails (100 percent coverage)
+ - test the tow log funtionality
 
-- move methods in time_off_requests_helper to the user model 
-
-- replace "time off request status" with enum - put changing the db in the migration.
-TEST it.
-
-asset_management-------
-Table: Asset
-
-Type: Asset Type
-
-OH Add enum: asset type and write a test for it, use a hash
-
-Later-------------
+Fix system tests (use ft-forms as an example?) does that even work
 
 Only make API calls in the Flex directory:
   - Convert everything to spec/models/flex to type: :flex (metadata) - rails helper
@@ -28,11 +17,7 @@ Clean up Academic Year model LIKE YOU CAN USE .MONTH and .YEAR METHODS
 
 Get rid of AB_TEST_OPTIONS completely
 
-Make the meter_audit report page a fucking datatables page because WOW that's garbaaage
-
-
-Failed examples:
-spec/models/pay_period_spec.rb
+Make the meter_audit report page a fucking datatables page?
 
 --- on branch vehicle-texts
 
@@ -53,4 +38,3 @@ Search for vehicle - entity - phone number in Flex
       dis
 
 If not found:  Ugh
-
