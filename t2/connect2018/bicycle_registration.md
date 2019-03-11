@@ -1,3 +1,4 @@
+# Do in permtest
 # Bicycle Registration Online
 
 ## Overview
@@ -17,59 +18,65 @@ Allow them to "buy" a sticker (could be free)
 ### Flex
 
 #### Lookup Table Management
-- There's some flex configuration
-- Lookup table management -> Vehicles
-- We're going to enter it into Flex/Flexport as a vehicle.
-- Under Vehicle Make - I say it's a bicycle. Model is something like
-Schwinn/Trek/Specialized. This is what LaDonna does, you can do it
-another way.
-Code BIKE Description Bicycle Is active True. Enforcement and access/
+[x] Lookup table management -> Vehicle Make -> Add Bicycle DONE: UID: 2051
+[x] Code BIKE Description Bicycle Is active True. Enforcement and access/
 revenue control selected.
-- Then you can add some models. Add popular ones. The have an "other"
-category in there people can select from. 
-Insert/Edit Vehicle Model -> Code: "TK", Model "Trek" for example
-- Lookup Table Management -> Physical Permit Type of "bicycle" 
-because when you put them on Flexport, don't want you to accidentally buy one
-for a vehicle.
-So with those two things set up in Lookup Table Management. For Plate type of 
-"serial number" could be used. A lot of you don't use plate types but some
-people do... I think we do like "PAN" or motorcycles. Plate type of
-serial number in that case.
+[x]NOTE: LEAVE ROVR CODE EMPTY
+[x] Lookup table management -> Vehicle Model -> Add popular ones along with "Other"
+  Insert/Edit Vehicle Model -> Code: "TK", Model "Trek" for example
+[x] Lookup Table Management -> Physical Permit Type of "bicycle" 
+  because when you put them on Flexport, don't want you to accidentally buy one
+  for a vehicle. Set the phyiscal group type to "audit" which is the same as hangtags
+  or adhesive permits.
+[x] For Plate type, "serial number" could be used. (some Flex customers do not use plate type)
+  We use plate type. I set it to code SERIAL desc Serial Number
+[x] Permit Classification -> Bicycle
+  code BIKE description Bicycle
+
+#### Facilities
+[x] Create a facility called Bicycle
+  Code BIKE
+  Description Bicycle
+  Note: this is not strictly necessary, but Metin asked for it so that his queries would work.
+  I still don't know why not having this would mess up any queries but there it is.
 
 #### Permit Number Ranges
-Description Bicycle Stickers
-Permit Type Bicycle
-Payroll Eligible N/A
-it is in-use. that's all you need though.
+[x] Description Bicycle Stickers
+  Permit Type Bicycle
+  Payroll Eligible N/A
+  it is in-use. that's all you need though.
+  - I made it non-inventoried. It's red, don't know why.
 
 #### Control Groups
-Your control group that you set up you set up as you would any other permit.
+[x]Your control group that you set up you set up as you would any other permit.
 Regular permit class, Do whatever... How far in advance could you stick the
 end date? You may not want them to expire. You can set them as far in the
-future as you want. Ten years is great. You can always extend... If there's no
-fee it don't matter. Pretty straightforward.
+future as you want. We picked 4 years.
 
 Q: What if someone sells their bicycle?
 A: Have them tell us and you can just either add the other customer OR
 de-register it and take the sticker off.
 
 #### Fixed Fee/Return Schedule
-Permit configuration. Insert fee schedule of fixed and 0.00. Permit type should 
+[x]Permit configuration. Insert fee schedule of fixed and 0.00. Permit type should 
 be bicycles. No renewals.  This is off the permit control group configuration.
 
+[x] SUBCLASSIFICATIONS?
+https://umass.t2flex.com/POWERPARK/config/permission/eligibleSubclassifications.aspx?groupId=5075
+look at the notes for this course
+
 ### Flexport
-Search settings -> Bicycle 
-CanAddBicycle = True
-Bicycle Attachments Required -> maybe you want a picture of the bike!
-Add Bicycle Make - Remember that's "bicycle" that you added before. It should be
+[] Search settings -> Bicycle 
+[] CanAddBicycle = True
+[] Bicycle Attachments Required -> maybe you want a picture of the bike? Not desired at this time.
+[] Add Bicycle Make - Remember that's "bicycle" that you added before in Flex. It should be
 shown as the UID of the make called "bicycle". Find out the UID and add it using
 the edit button.
-Add bicucle Plate Type  - add the one that you added before ,the UID.
-Bicycle Attachments Note Type - we have put in 1 in this demo, which is a photo.
-. How do we find that out.. that's a lookup table management note types 
-Bocycle Phical Permit type - we made it in lookiup table management, find out
-the UID there.
-Add bicycle serial number label? What was that again???  Oh that's if you want 
-the field to show up on the page where tehy add the bicycle? 
-
+[] Add bicycle Plate Type  - add the one that you added before, the UID.
+[] Bicycle Attachments Note Type - we have put in 1 in this demo, which is a photo.
+How do we find that out.. that's a lookup table management note types 
+[] Bicycle Physical Permit type - we made it in lookiup table management, find out
+the UID there. It's the physical permit type of "bicycle"
+[] Add bicycle serial number label? What was that again???  Oh that's if you want 
+the field to show up on the page where they add the bicycle?
 The serial number entered will end up under both VIN and PLATE in the vehicle. 
