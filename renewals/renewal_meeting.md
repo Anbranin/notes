@@ -20,3 +20,14 @@ TODO
 - Add phone number as mandatory field
 - Add language to contract stating you will be enrolled in electronic communications (language to be provided by Jon)
 - Enroll people in text messaging by default
+
+---
+
+renewal date: april 11
+
+Dates for football:
+Sept 7, 21, 28
+Oct 26
+Nov 2
+Nov 23
+

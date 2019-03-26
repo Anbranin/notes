@@ -72,7 +72,7 @@ look at the notes for this course
 [] Add Bicycle Make - Remember that's "bicycle" that you added before in Flex. It should be
 shown as the UID of the make called "bicycle". Find out the UID and add it using
 the edit button.
-[] Add bicycle Plate Type  - add the one that you added before, the UID.
+[] Add bicycle Plate Type  - add the one that you added before, the UID. The Serial Number is what we want.
 [] Bicycle Attachments Note Type - we have put in 1 in this demo, which is a photo.
 How do we find that out.. that's a lookup table management note types 
 [] Bicycle Physical Permit type - we made it in lookiup table management, find out
