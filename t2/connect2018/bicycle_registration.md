@@ -66,17 +66,17 @@ https://umass.t2flex.com/POWERPARK/config/permission/eligibleSubclassifications.
 look at the notes for this course
 
 ### Flexport
-[] Search settings -> Bicycle 
-[] CanAddBicycle = True
-[] Bicycle Attachments Required -> maybe you want a picture of the bike? Not desired at this time.
-[] Add Bicycle Make - Remember that's "bicycle" that you added before in Flex. It should be
+[x] Search settings -> Bicycle 
+[x] CanAddBicycle = True
+[x] Bicycle Attachments Required -> maybe you want a picture of the bike? Not desired at this time.
+[x] Add Bicycle Make - Remember that's "bicycle" that you added before in Flex. It should be
 shown as the UID of the make called "bicycle". Find out the UID and add it using
 the edit button.
-[] Add bicycle Plate Type  - add the one that you added before, the UID. The Serial Number is what we want.
-[] Bicycle Attachments Note Type - we have put in 1 in this demo, which is a photo.
-How do we find that out.. that's a lookup table management note types 
-[] Bicycle Physical Permit type - we made it in lookiup table management, find out
-the UID there. It's the physical permit type of "bicycle"
-[] Add bicycle serial number label? What was that again???  Oh that's if you want 
+[x] Add bicycle Plate Type  - add the one that you added before, the UID. The Serial Number is what we want.
+[x] Bicycle Attachments Note Type - we have put in 1 in this demo, which is a photo.
+  How do we find that out.. that's a lookup table management note types 
+[x] Bicycle Physical Permit type - we made it in lookiup table management, find out
+  the UID there. It's the physical permit type of "bicycle"
+[x] Add bicycle serial number label? What was that again???  Oh that's if you want 
 the field to show up on the page where they add the bicycle?
 The serial number entered will end up under both VIN and PLATE in the vehicle. 

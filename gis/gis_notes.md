@@ -67,5 +67,11 @@ request and displays that data as a JSON object
 - Any widgets we create should be open source. The repo can be private at first and we can make
 it public later.
 
-# August 28th
+# April 18th
 --------------
+
+Making backups on Confluence for students leaving
+
+barcode & sequencial integers something about MT Ida stickers
+data collection starts May
+I just realized all the notes are on confluence anyways

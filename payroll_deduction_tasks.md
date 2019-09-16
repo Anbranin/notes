@@ -10,12 +10,12 @@ Steps:
   1. Run the payroll_deduction_import task in the Hub before 10:00AM
     1. Download the file from the president's office which contains a record of
     the payroll deductions that occurred.
-    2. Run some checks, create payroll deduction receipts
-    3. Upload the file to Flex
+    1. Run some checks, create payroll deduction receipts
+    1. Upload the file to Flex
   1. Flex automatically runs the PD-IMPORT task at 10:00 AM so it has a record of payments that
   were applied.
 Notes: 
-* If you forget in the morning but still remember on Friday, you can click 'run now'
+* If you forget in the morning before it runs automatically but still remember on Friday, you can click 'run now'
   and it will still run and everything will be fine.
 * If you miss friday, go in, "run now" then set the next run date in the _past_ (the last time it was supposed to have run)
 * Editing the task in Flex? Manually close the payroll deduction task drawer so you can select it in the dropdown.
