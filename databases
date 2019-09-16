@@ -1,0 +1,14 @@
+umaps-rail-production
+
+umaps-rails:
+$ mysql -u umaps-rail-production -h umwebdb.umass.edu -P 3308 -p
+
+umaps-staging:
+$ mysql -u umaps-rails-staging -h stag.umwebdb.umass.edu -P 3307 -p
+
+golf-cart-rentals
+$ mysql -u golf-cart-rentals-production -h umwebdb.umass.edu -P 3308 -p
+
+aggressive-epsilon
+
+$ mysql -u aggressive-epsilon-production -h umwebdb.umass.edu -P 3308 -p
