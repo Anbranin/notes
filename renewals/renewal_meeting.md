@@ -31,3 +31,7 @@ Oct 26
 Nov 2
 Nov 23
 
+----
+Automatic renewal for employees
+- send them an email - we can renew permit for you. link to the page
+with as much stuff filled in as possible?
