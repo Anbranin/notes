@@ -75,3 +75,62 @@ Making backups on Confluence for students leaving
 barcode & sequencial integers something about MT Ida stickers
 data collection starts May
 I just realized all the notes are on confluence anyways
+
+# November 25th
+------------------
+How are we going to document everything?
+2 main things on agenda
+establishing tech support / resources for the campus parking map
+also to fill out integration of campus parking map
+there are 2 different cmapus parking maps? there's a mobile application from housing called MyUmass
+for staff a viewer they have parking rogue platform:? coroga??? what's he saying
+a moudle that's not active
+
+Manage what -- responsible for twisting armt o make sure all materials there
+documenting all 3 section s of this in the same place
+Confluence? 
+example of why: application has a search bar - based on geolocator - geolocator is component - publish to arcgis server - applicationr eads it and it's fine
+  server sometimes stops returning results, so users cannot find the things. If it's not working, Jonah created a monitoring process and it checks if things are working
+  if it's not working it's send an auto email to arcgis support. parking-it should be in the email list for that
+  group parking several people or people who would like to get it 
+  web service restart is manual
+  important but not urgent things never happen
+  Right now we're not monitoring that
+  a test to cover this application where you check it every 10 minutes or would you like to add htat
+  better if you add it
+  that shiuld be on the list of the project
+  Failed to Find Route - walking directions sometimes don't work and we don't have a way of checking
+You maintain Github works smooth you put PR Karin approves, buildbot builds application, but this isn't documented - How it moves from Github to ETLs  how it gets deployed
+Matt did a thing
+what is ETL
+What if you put in ILC instead of integrative learning center, campus places
+ARCGIS online
+down time ratio
+no downtime
+let's say
+
+## Monitoring
+
+## Documentation
+Confluence for bugs, main page for where you can check for things
+Share log files from web server so you can see if any type of request 404? anything? that' be useful?
+start working on this er documenting - who's going to do the documenting
+Liam's last semester is next semester - the student who is in training needs to get 
+that student needs to be onboarded to all the groups
+
+## Confluence
+Create
+Select Space
+How-to
+atlassian tools?
+GIS
+Templates for creating
+Multiple ways how to do it
+Confluence for Documentation - Document the process before end of semester
+For Liam about Data Dictionary
+What is the Data Dictionary - feature layers - the documentation is all there
+wow nice
+Change Log is at the bottom
+
+Summary: It's about an hour to summarize "we need to document"
+
