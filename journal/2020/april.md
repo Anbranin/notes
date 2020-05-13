@@ -75,3 +75,14 @@
   - review https://github.com/umts/round-three/pull/3388
   - open, finish and merge https://github.com/umts/round-three/pull/3391
   - opened PR https://github.com/umts/st-pax/pull/218
+## 27th
+  - Open https://github.com/umts/round-three/pull/3393, MVP Rails update
+  - rubocop vehicle model, open https://github.com/umts/round-three/pull/3394
+## 28th
+  - rubocop vehicle assignment, opened https://github.com/umts/round-three/pull/3396
+## 29th
+  - rubocop daily assignment PDF, open https://github.com/umts/round-three/pull/3397
+## 30th
+  - Orientation for new trainee Daniel Lacayo
+  - review and delete outdated branch replace-scopes
+  - clean up employee-assignments controller, open https://github.com/umts/round-three/pull/3401
