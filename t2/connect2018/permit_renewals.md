@@ -1,5 +1,4 @@
 #Permit Renewals
-
 How can we make things go smoothly?
 
 ##Document the Process

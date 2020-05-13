@@ -101,12 +101,3 @@ the receipt is where ou want to start with most reports.. if you don't care abou
 not view.
 
 They wrote a custom view to handle shit so if you have something that's super wacky just call T2 they'll figure out a way to help you
-
-TODO: 
-Find out who a contact is at T2 you can ask for database access
-ANSWER:
-for VPN Access: make a support case to get VPN access
-For SQL queries: Check the box on your user profile
-
-Right now we're using webservices queries n shit. I want to set up sql developer etc.
-
