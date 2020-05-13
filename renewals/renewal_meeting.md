@@ -1,37 +1,5 @@
-- removing 2nd shift from student subclassification
-( how many students will this affect? )
+Soft Opening: Link on the website but no emails sent out
+tuesday play with opening permits for renewal, wednesday morning open
+2 notes: citation amount of $35 assumed by bursar's office
+         covid permit refund of $35
 
-any problems from last-year's renewals?
-
-- Why are returns / refunds higher than last year (are they? King thinks they are)
-- People going abroad? Single semester permits
-- Wording to make sure they know what they're purchasing
-- 200 limit on semester-long permits
-- if you're only here first semester, must purchase in-office? Jamie's idea.
-
-How to make sure people really know they're buying single semester permits?
-- confirmation box - confirm 1 semester only permit
-- regular permits for all next year
-Envelope may change this year
-For the mt Ida - going to sell them online & shit we're just waiting on a dude
-We need to make a thing fo rthis dude to log into Flex, give him PCO privileges (clone a PCO). He'll get the T2 app on the handheld
-
-TODO
-- Add phone number as mandatory field
-- Add language to contract stating you will be enrolled in electronic communications (language to be provided by Jon)
-- Enroll people in text messaging by default
-
----
-
-renewal date: april 11
-
-Dates for football:
-Sept 7, 21, 28
-Oct 26
-Nov 2
-Nov 23
-
-----
-Automatic renewal for employees
-- send them an email - we can renew permit for you. link to the page
-with as much stuff filled in as possible?

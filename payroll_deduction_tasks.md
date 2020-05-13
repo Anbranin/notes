@@ -1,6 +1,6 @@
 Payroll tasks:
 
-On Paydays:
+# On Paydays:
  In the Hub: Payroll Deduction Import (imports INTO the hub from the president's office and INTO Flex from the Hub)
   Hub --> Admin --> Tasks
  In Flex: Payroll Deduction Import
