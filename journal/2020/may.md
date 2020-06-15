@@ -75,4 +75,13 @@
 ## 27th
   - review https://github.com/umts/round-three/pull/3425
   - review https://github.com/umts/round-three/pull/3426
-
+## 28th
+  - review https://github.com/umts/round-three/pull/3431
+  - review https://github.com/umts/round-three/pull/3433
+  - opened issue in umaps-rails
+  - reviewed umaps-rails PR
+  - reviewed incidents PR
+## 29th
+  - review https://github.com/umts/round-three/pull/3431
+  - review https://github.com/umts/round-three/pull/3433
+  - helped Ben with stop-project
