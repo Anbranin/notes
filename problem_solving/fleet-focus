@@ -1,0 +1,1 @@
+brew install freetds needed to happen before tiny_tds gem would compile
