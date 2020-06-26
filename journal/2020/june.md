@@ -44,3 +44,28 @@
   - troubleshoot incidents specs for Ava
   - review incidents 249
   - catch-up with Matt to alk about training sessions on round-three and methods for reviewing a big PR
+## 23rd
+  - SQL book section
+  - work on refactoring shift entry
+  - move pronoun choice question to top of application (troubleshooting jobapps for Don)
+  - finish reviewing resume upload PR, jobapps #383
+  - review derfect column PR round-three 3472
+  - make sure waitlists don't remove 'issued' permits in addition to non-removal of 'active' permits
+  - fix entity rake task and deploy (umaps-rails)
+  - checkin with Ava, look over incidents PR 255
+  - review Liam's time assignment PR, round-three 3470
+  - help Dan figure out Training Sessions & Employee Assignments
+  - Teach Joe about JQuery
+  - Run task to fix Pay Infos for Liam on the round-three server
+## 24th
+  - Review Joe's round-three PR on perm shift dropdowns, #3477
+  - Review Liam's Meet & Greet PR on round-three, #3478
+  - Work on refactoring Javascript for Shift Entry on round-three
+  - SQL book section
+## 25th
+  - Work on ST Pax pulls 215 and 218, prepping for pax self-registration
+  - Review Liam's umaps-rails PR 1321, flex permit report efficiency upgrade
+  - refactor shift-entry javascript on round-three
+  - SQL Book section, temporal data type overview
+  - Write query to retrieve documents over 7 years old in Flex database
+  - Review Joe's shift dropdown PR in round-three, 3479
