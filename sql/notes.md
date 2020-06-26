@@ -148,3 +148,23 @@ When using floating-point you can specify:
  So 26.44 and 5.60 will store fine, but 17.8949 would be stored as 17.89, and trying to store 127.33394 would generate an error.
  you can designate floating-point columns as unsigned, but that will not, as with integers, alter the ranges that can be stored,
  rather it will prevent negative numbers from saving.
+
+#### Temporal Data Types
+
+Information about dates and times. Date, date time, a year, or elapsed time can all be stored.
+Type, Default format, Allowable values
+------
+date, YYYY-MM-DD, 1000-01-01 to 9999-12-31
+datetime, YYYY-MM-DD HH:MI:SS, 1000-01-01 00:00:00.000000 to 9999-12-31 23:59:59.999999
+timestamp, YYYY-MM-DD HH:MI:SS, 1970-01-01 00:00:00.000000 to 2038-01-18 22:14:07.999999
+year, YYYY, 1901 to 2155
+time, HHH:MI:SS, −838:59:59.000000 to 838:59:59.000000
+
+Database servers store temporal data in various ways. the format string (Default format above) shows how it will be represented when retrieved,
+or constructed when inserting or updating. Like if you want to update a year you should use the string "2005",
+or if you want to update the date February 22, 1985 into a date you would use the string "1985-02-22".
+The types `datetime`,`timestamp`, and `time` types allow fractional seconds up to 6 decimal places (microseconds). Supply a value from 0 to 6 when defining columns. For example
+`datetime(2)` allows your time values to include hundredths of a second.
+
+Each database server allows different ranges. Oracle accepts 4712BC to 9999AD, SQL Server accepts 1753AD to 9999AD (although SQL Server's `datetime2` data type allows from 1AD to 9999AD).
+MySQL can store 1000AD to 9999AD. Keep this in mind for storing historical dates.
