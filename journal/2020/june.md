@@ -69,3 +69,12 @@
   - SQL Book section, temporal data type overview
   - Write query to retrieve documents over 7 years old in Flex database
   - Review Joe's shift dropdown PR in round-three, 3479
+## 26th
+  - Merge & Deploy Brochure PR ST Pax, prep for passenger self-registration
+  - continuing work to refactor shift entry JS for round-three
+  - read SQL book
+  - figure out how to delete documents on Flex
+  - review Joe's shift dropdown PR, round-three #3479
+  - Review a whole mess of Rails update PRs that Matt made
+
+
