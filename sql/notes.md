@@ -168,3 +168,44 @@ The types `datetime`,`timestamp`, and `time` types allow fractional seconds up t
 
 Each database server allows different ranges. Oracle accepts 4712BC to 9999AD, SQL Server accepts 1753AD to 9999AD (although SQL Server's `datetime2` data type allows from 1AD to 9999AD).
 MySQL can store 1000AD to 9999AD. Keep this in mind for storing historical dates.
+
+*Date format components*
+Component, Definition, Range
+---
+YYYY, year including century, 1000 to 9999
+MM, Month, 01 to 12
+DD, Day, 01 to 31
+HH, Hour, 00 to 23
+HHH, Hours (elapsed), -838 to 838
+MI, Minute, 00 to 59
+SS, Second, 00 to 59
+
+fun fact: You can use a simple `time` column to track how long something takes. Also, if there is such a thing as a time column, why can't we use it in uh...
+
+### Table Creation
+
+Step 1: Design
+Decide what types of info you want to track. What columns do you need, and what are their data types?
+
+First Name: varchar(40)
+Last Name: varchar(40)
+Birthdate: date
+Age: integer
+Address: varchar(40)
+favorite_foods: varchar(100)
+
+Step 2: Refinement
+We find problems with our implementation.
+ For example address should be broken up into different fields like
+Postal Code, country, city, state
+we also forgot our primary key.
+id: smallint (unsigned)
+and how about, since a person storing favorite foods in just one field is weird, we make another table of favorite_foods?
+
+person_id: smallint
+food: varchar(20)
+
+To totally _normalize_ this implementation we would make people choose their favorite food from a list, rather than creating a new entry every time. After all,
+what if one person puts "pasta" and another adds "spaghetti?" Are they the same thing?
+We may want to just have it be totally flexible though, we don't need to normalize everything.
+
