@@ -184,28 +184,35 @@ fun fact: You can use a simple `time` column to track how long something takes. 
 
 ### Table Creation
 
-Step 1: Design
-Decide what types of info you want to track. What columns do you need, and what are their data types?
+- Design your table.
+What kind of information do you need to track? Which columns, what are their data types?
+- Refine your ideas.
+What are some problems with your implementation? Imagine your table's use. Are there any implementations which could be normalized?
+For example, for eye color, do you want people to enter their own eye color with a `varchar(20)` field? Or do you want to create a
+join table with `person_id: SMALLINT, color: VARCHAR(20)`? The benefits of _normalization_ in this case are that you wouldn't have both
+"blue" and "cerulean", so if you ever needed to sort or query based on the data it would be easier. However it makes for a poorer user experience
+occasionally.
+- Build the schema
 
-First Name: varchar(40)
-Last Name: varchar(40)
-Birthdate: date
-Age: integer
-Address: varchar(40)
-favorite_foods: varchar(100)
-
-Step 2: Refinement
-We find problems with our implementation.
- For example address should be broken up into different fields like
-Postal Code, country, city, state
-we also forgot our primary key.
-id: smallint (unsigned)
-and how about, since a person storing favorite foods in just one field is weird, we make another table of favorite_foods?
-
-person_id: smallint
-food: varchar(20)
-
-To totally _normalize_ this implementation we would make people choose their favorite food from a list, rather than creating a new entry every time. After all,
-what if one person puts "pasta" and another adds "spaghetti?" Are they the same thing?
-We may want to just have it be totally flexible though, we don't need to normalize everything.
+```
+CREATE TABLE person
+(id SMALLINT UNSIGNED,
+first_name VARCHAR(30),
+last_name VARCHAR(30),
+CONSTRAINT pk_person PRIMARY KEY (id));
+```
+When creating a table youneed to tell the database server which column will be used as a primary key.
+you do this by creating a CONSTRAINT and naming that constraint `pk_tablename` There are other types of constraints. 
+Another type of constraint is called a `CHECK` constraint. It lists allowable values for your field. If we wanted to
+only allow people to choose certain favorite colors:
+```
+favorite_color VARCHAR(10) CHECK (favorite_color In ('purple','pink'))
+```
+the MySQL allows you to do a check constraint but will not enforce it, unlike other servers. But we can use `enum` to get around this:
+```
+favorite_color ENUM('purple', 'pink')
+```
+So we don't use a constraint for this. The enum will function as one.
+- View your new table
+describe person; (or desc person)
 
