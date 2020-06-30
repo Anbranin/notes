@@ -76,5 +76,14 @@
   - figure out how to delete documents on Flex
   - review Joe's shift dropdown PR, round-three #3479
   - Review a whole mess of Rails update PRs that Matt made
-
-
+## 29th
+  - review Ben's Jobapps PR #386
+  - refactor shift entry round-three
+  - make passenger self-registration branch on ST-pax
+  - fix ST pax pr 215 (merge conflict)
+  - review round-three #3479, Joe's dropdown PR
+  - read SQL book
+  - review Matt's incidents PR #260
+  - look into manual fuel entry editing problems
+  - review TOR PR 1336 umaps-rails
+  - Make Jobapps PR to harmonize uglifier for compression of ES6 syntax
