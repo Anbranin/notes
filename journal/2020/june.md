@@ -87,3 +87,15 @@
   - look into manual fuel entry editing problems
   - review TOR PR 1336 umaps-rails
   - Make Jobapps PR to harmonize uglifier for compression of ES6 syntax
+## 30th
+  - deploy Jobapps new template-editing system, message Don
+  - review TOR refactor, umaps-rails 1336
+  - plan out ST Pax self-registration
+  - assign round-three issue 3481 to Ben, broken invoice deletion
+  - read SQL book
+  - discuss qualification selection javascript round-three
+  - help Daniel with controller testing
+  - upload new data from round-three
+  - proof of concept: download a file from T2
+  - calculate documents attached to notes, size
+  - research fuel entry issue on round-three
