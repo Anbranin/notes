@@ -215,4 +215,21 @@ favorite_color ENUM('purple', 'pink')
 So we don't use a constraint for this. The enum will function as one.
 - View your new table
 describe person; (or desc person)
-
+six colums are shown in the describe output. `Field`, `Type` mean what you'd think.
+`Null` is whether or not a column can be null. `Key` is whether a column is a part of any keys, foreign or primary.
+`Default` is whether a column has a default value (automatically saved when you update unless another value is specified).
+`Extra` is anything else that might apply to your column.
+_note_: The reason you need null columns is self-explanatory, but when you have a null column, you may say that it _is_ null, not that it _equals_ null. A fine but important distinction.
+- Create a related table:
+```
+CREATE TABLE favorite_food
+(person_id SMALLINT UNSIGNED,
+food VARCHAR(20),
+CONSTRAINT pk_favorite_food PRIMARY KEY (person_id, food),
+CONSTRAINT fk_fav_food_person_id FOREIGN KEY (person_id)
+REFERENCES person (id));
+```
+Things to note: 
+- To guarantee uniqueness of the table, you must use two keys, since a person can have more than one favorite food (so there will be more than one row with the same person's ID),
+- a foreign key constraint can only allow values in the person_id column that correspond to values in the ID table of person. That is, if there isn't a person with an ID of 100, you cannot have
+that as a value in your new table. If you forget to add this constraint, you can add it later with `ALTER TABLE`
