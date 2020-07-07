@@ -14,4 +14,12 @@
   - review Dan's training session PR on round-three
   - review Liam's round-three PR 3485 on reassignments
   - assign Joe some issues, review his training progress
-
+## 6th
+  - create round-three PR to resolve issue 3024, modify hastus import to include eve differential
+  - read SQL book
+  - work on ST Pax self-registration
+  - shift entry refactor - make PR removing users/shift_entry
+  - review Dan's training sessions PR 3484
+  - troubleshoot bundler issue for Dan
+  - troubleshoot RSpec for Ben
+  - resolve questions about an issue for Joe
