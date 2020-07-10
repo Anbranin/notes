@@ -23,3 +23,20 @@
   - troubleshoot bundler issue for Dan
   - troubleshoot RSpec for Ben
   - resolve questions about an issue for Joe
+## 7th
+  - read SQL book
+  - work onST Pax self-registration
+  - check entity import emails on server, make PR 1338 umaps-rails to fix
+  - review Matt's rails update PRS
+  - review Ben's PR 3492 about infractions
+  - check status of GEO file on server
+  - assign Justin a PR to review
+## 8th
+  - read SQL book
+  - Work on ST Pax self-registration
+  - fix entity import emails - opened PR
+  - brainstorm how to do payment plan adjustments, find appropriate web query
+## 9th
+  - review and work on Rails update PR round-three
+  - Help Ben with bus map history issue, research SQL
+
