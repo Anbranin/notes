@@ -233,3 +233,70 @@ Things to note:
 - To guarantee uniqueness of the table, you must use two keys, since a person can have more than one favorite food (so there will be more than one row with the same person's ID),
 - a foreign key constraint can only allow values in the person_id column that correspond to values in the ID table of person. That is, if there isn't a person with an ID of 100, you cannot have
 that as a value in your new table. If you forget to add this constraint, you can add it later with `ALTER TABLE`
+
+### Table Modification
+#### INSERT
+Before inserting data into any table we need to discuss how to generate a value for a numeric primary key. Pick a number out of thin air? Terrible. Choose one based on the last value? Still bad--
+what if another person is running an insert statement at the same time? Rather, all database servers provide a method for generating primary keys. For Oracle, a separate schema object called
+a _sequence_ is used. In MySQL, just turn on the _auto-increment_ feature. Normally you'd do it at creation, but if you forgot that's cool, we need to learn about altering tables anyway.
+`ALTER TABLE person MODIFY id SMALLINT UNSIGNED AUTO_INCREMENT`
+Of course, because we have a foreign key constraint with favorite_foods, we cannot alter the primary key! We get this error:
+> ERROR 1833 (HY000): Cannot change column 'id': used in a foreign key constraint 'fk_fav_food_person_id' of table 'sakila.favorite_food'
+So what do we do? Well. First, lock the tables for writing so you don't have any data integrity problems:
+`LOCK TABLES favorite_food WRITE, person WRITE;`
+Then, drop the foreign key constraint so you can modify it:
+`ALTER TABLE favorite_food DROP FOREIGN KEY fk_fav_food_person_id, MODIFY person_id SMALLINT UNSIGNED;`
+Then you can modify your table. Then add the foreign key back in:
+`ALTER TABLE favorite_food ADD CONSTRAINT fk_fav_food_person_id FOREIGN KEY (person_id) REFERENCES person (id);`
+As for unlocking the tables, you can do so manually, or the locks will time out. During the lock, only your database connection can insert update or delete, all other users are locked out.
+Now, you'll see _auto-increment_ under *Extra* if you describe the table!
+When inserting data, insert either null for the ID or don't insert anything at all.
+Now we can add data:
+```
+INSERT INTO person (first_name, last_name) VALUES ('Michael', 'Burnham')
+```
+Breaking it down:
+INSERT INTO table_name (column1, column1) VALUES (value-for-column1, value-for-column2)
+The columns and values must correspond in number and type. Dates need to be a string, but as long as they're in the corect format they'll get turned into dates.
+```
+INSERT INTO person (first_name, birth_date) VALUES ('Spock', '2230-01-06');
+INSERT INTO favorite_food (person_id, food) VALUES (1, 'LSD');
+INSERT INTO favorite_food (person_id, food) VALUES (1, 'Psilocybin')
+SELECT food FROM favorite_food WHERE person_id = 1 ORDER BY food
+```
+Look how we ordered that data. Without the order by clause, the data may be in a particular order.. or it may not be.
+
+#### XML Data
+Most database servers provide a way to get XML data from your query. With MySQL, just use the `--xml` option when starting the MySQL command line tool:
+
+> mysql -u root --xml
+```
+mysql> select * from favorite_food;
+<?xml version="1.0"?>
+
+<resultset statement="select * from favorite_food;" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <row>
+  <field name="person_id">1</field>
+  <field name="food">LSD</field>
+  </row>
+
+  <row>
+  <field name="person_id">1</field>
+  <field name="food">Psilocybin</field>
+  </row>
+
+  <row>
+  <field name="person_id">2</field>
+  <field name="food">bananas</field>
+  </row>
+</resultset>
+```
+Isn't that cool?
+With SQL server, instead of configuring your command line tool you can use a flag:
+`SELECT * FROM favorite_food FOR XML AUTO, ELEMENTS`
+
+#### UPDATE
+```
+UPDATE person SET street = '225 Baker Street', city = 'London' WHERE person_id = 1;
+```
+Of course, you can put anything you want in the WHERE clause, updating any number of rows. QUESTION: How to update all rows
