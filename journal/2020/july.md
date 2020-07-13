@@ -39,4 +39,14 @@
 ## 9th
   - review and work on Rails update PR round-three
   - Help Ben with bus map history issue, research SQL
-
+## 10th
+  - read SQL book
+  - work on ST Pax self-registration
+  - work on payment plan adjustment task
+  - review Rails update PR
+  - research sick pay info & make issue
+  - get and upload data dump
+  - make issue about covid19 checklist & assign to Ben
+  - make issue about mailer views
+  - troubleshoot applications for Don
+  - put RA/PM file on server
