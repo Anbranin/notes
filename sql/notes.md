@@ -299,4 +299,40 @@ With SQL server, instead of configuring your command line tool you can use a fla
 ```
 UPDATE person SET street = '225 Baker Street', city = 'London' WHERE person_id = 1;
 ```
-Of course, you can put anything you want in the WHERE clause, updating any number of rows. QUESTION: How to update all rows
+Of course, you can put anything you want in the WHERE clause, updating any number of rows.
+ QUESTION: How to update all rows ANSWER leave off your WHERE clause altogether.
+The response of the server tells you how many rows were updated.
+#### Common Mistakes
+- Nonunique primary key
+The answer here is simple--don't try to bypass the auto-increment function.
+- Nonexistent foreign key
+If there's a foreign key constraint, also don't try to bypass it. If you want to create a child row that references a parent, you must have a parent first.
+_note_: foreign key constraints are only enforced if your tables are created using the InnoDB storage engine.
+- Column value violations
+If you try to set a value that can't be set in a column you'll get various errors depending on what you try to do. For example since we have our favorite_color restricted to 
+pink and purple with an enum, if we try to set it to blue we'll get `ERROR 1265 (01000): Data truncated for column 'favorite_color' at row 1`
+- invalid date conversions
+If you don't give mysql the date format it's expecting, you'll get an `Incorrect date value: 'DEC-21-1985'` for example. That's not the right format.
+However you don't need to rely on the default format; you can tell MySQL exactly what format you're using.
+```
+UPDATE person SET birth_date = str_to-date('DEC-21-1985', '%b-%d-%Y') WHERE id = 1;
+```
+Here are some other date format types you'll need:
+```
+%a The short weekday name, such as Sun, Mon, ...
+%b The short month name, such as Jan, Feb, ...
+%c The numeric month (0..12)
+%d The numeric day of the month (00..31)
+%f The number of microseconds (000000..999999)
+%H The hour of the day, in 24-hour format (00..23)
+%h The hour of the day, in 12-hour format (01..12)
+%i The minutes within the hour (00..59)
+%j The day of year (001..366)
+%M The full month name (January..December)
+%m The numeric month
+%p AM or PM
+%s The number of seconds (00..59)
+%W The full weekday name (Sunday..Saturday)
+%w The numeric day of the week (0=Sunday..6=Saturday)
+%Y The four-digit year
+```
