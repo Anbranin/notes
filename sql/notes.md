@@ -344,7 +344,7 @@ How are queries actually executed by database servers?
 - A connection is made
 You log into the server, in this case using the mysql command line tool. Having provided a username & password, once mysql verifies that that is correct,
  a _database connection_ is generated for you to use. This connection is held by the application that requested it, until release (quitting, server shutdown)
- Each connection is assigned an identifier. When I logged in just now: 
+ Each connection is assigned an identifier. When I logged in just now:
 > Your MySQL connection id is 327
 How is the connection ID useful? well, it could be useful to your database admin if a malformed query runs for hours or something.
 Once a connection is made you can execute queries.
