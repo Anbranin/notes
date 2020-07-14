@@ -50,3 +50,14 @@
   - make issue about mailer views
   - troubleshoot applications for Don
   - put RA/PM file on server
+## 13th
+  - Update unit codes for all ras/pms
+  - fix rake task for entity import
+  - read SQL book section, UPDATE command
+  - troubleshoot applications for Don
+  - ST Pax self registration
+  - notes on payment plan adjustment task
+  - meeting with Justin about umaps-rails
+  - work on Rails update PR
+  - help Justin with Web Drivers
+  - edit GEO file
