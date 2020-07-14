@@ -256,7 +256,7 @@ Now we can add data:
 INSERT INTO person (first_name, last_name) VALUES ('Michael', 'Burnham')
 ```
 Breaking it down:
-INSERT INTO table_name (column1, column1) VALUES (value-for-column1, value-for-column2)
+`INSERT INTO table_name (column1, column1) VALUES (value-for-column1, value-for-column2)`
 The columns and values must correspond in number and type. Dates need to be a string, but as long as they're in the corect format they'll get turned into dates.
 ```
 INSERT INTO person (first_name, birth_date) VALUES ('Spock', '2230-01-06');
@@ -264,7 +264,8 @@ INSERT INTO favorite_food (person_id, food) VALUES (1, 'LSD');
 INSERT INTO favorite_food (person_id, food) VALUES (1, 'Psilocybin')
 SELECT food FROM favorite_food WHERE person_id = 1 ORDER BY food
 ```
-Look how we ordered that data. Without the order by clause, the data may be in a particular order.. or it may not be.
+Look how we ordered that data. Without the order by clause, the data may be
+in a particular order.. or it may not be.
 
 #### XML Data
 Most database servers provide a way to get XML data from your query. With MySQL, just use the `--xml` option when starting the MySQL command line tool:
@@ -302,6 +303,7 @@ UPDATE person SET street = '225 Baker Street', city = 'London' WHERE person_id =
 Of course, you can put anything you want in the WHERE clause, updating any number of rows.
  QUESTION: How to update all rows ANSWER leave off your WHERE clause altogether.
 The response of the server tells you how many rows were updated.
+
 #### Common Mistakes
 - Nonunique primary key
 The answer here is simple--don't try to bypass the auto-increment function.
@@ -336,3 +338,27 @@ Here are some other date format types you'll need:
 %w The numeric day of the week (0=Sunday..6=Saturday)
 %Y The four-digit year
 ```
+# Chapter 2
+## Query Mechanics
+How are queries actually executed by database servers?
+- A connection is made
+You log into the server, in this case using the mysql command line tool. Having provided a username & password, once mysql verifies that that is correct,
+ a _database connection_ is generated for you to use. This connection is held by the application that requested it, until release (quitting, server shutdown)
+ Each connection is assigned an identifier. When I logged in just now: 
+> Your MySQL connection id is 327
+How is the connection ID useful? well, it could be useful to your database admin if a malformed query runs for hours or something.
+Once a connection is made you can execute queries.
+- A query is made, and these checks are done:
+  - Do you have permission to execute this statement?
+  - Do you have permission to access the desired data?
+  - Is your statement syntax correct?
+If your statement passes these checks, your query is handed to the _query optimizer_
+ that determines the most efficient way to execute your query. It will look at things like indices,
+ join ordering, and then picks an _execution plan_.
+*NOTE*: (For more about optimizers, read Baron Schwartz's "High Performance MySQL" on O'Reilly.)
+- A _result set_ is returned to the calling application (in our case the mysql tool)
+A result set is just another table containing rows and columns, remember.
+A query that returns nothing will merely return *Empty set* (0.02 sec)
+A query that returns results will be formatted by the mysql tool into a table with column headers and boxes constructed around the results to make it readable
+by using the `+ | -` characters.
+After the last row of data mysql will tell you how long that took and how many rows were returned.
