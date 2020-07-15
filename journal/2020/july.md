@@ -61,3 +61,11 @@
   - work on Rails update PR
   - help Justin with Web Drivers
   - edit GEO file
+## 14th
+  - Finished Chapter 2 SQL book
+  - Work on ST Pax self-registration
+  - review Ben's COVID umaps-rails PR
+  - remove GEO from file
+  - start work on adding cell number subscription to ST Pax
+  - review umaps-rails with Justin & share credentials with Matt & Justin
+  - review Dan's PR testing round-three
