@@ -69,3 +69,18 @@
   - start work on adding cell number subscription to ST Pax
   - review umaps-rails with Justin & share credentials with Matt & Justin
   - review Dan's PR testing round-three
+## 15th
+  - SQL book Chapter 3, select clauses
+  - ST Pax self-registration
+  - work on adding cell subscription to ST Pax
+  - put note in covid19 checklist and don't merge yet
+  - review Justin's ruby update PR and ask Matt how to deploy
+  - research infraction/callout issue
+  - research T2 hosted fingerprint mismatch
+  - ST Pax issue 229, combining index views - started work
+## 20th
+  - read about character encoding
+  - address umaps-rails issue, matt's question on scan database backups
+  - review PR 3508 in round-three, Ben's infraction refactor
+  - discuss ST Pax changes with ST admins
+  - Help Joe with ST Pax
