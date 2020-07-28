@@ -1,5 +1,4 @@
-# Chapter 1
-## Basics
+# Basics
 The `primary_key` is a column that uniquely identifies a row in the table
 There is a distinction between 'natural' and 'surrogate' keys: A primary key
 of `first_name/last_name` is an example of a 'natural' key. It is a poor choice
@@ -480,3 +479,114 @@ WHERE date(r.rental_date) = '2005-06-14';
 ```
 Note that you can also use the `AS` keyword when defining aliases but it is not required (`rental AS r`).
 ### The where Clause
+Sometimes you want to retrieve all rows from a table and sometimes not. Most of the time you need a _filter_.
+The `where` clause is the mechanism for filtering out unwanted rows from your result set.
+Like, if we wanted to see only G rated films that can be rented out for at least a week:
+```
+SELECT title FROM film WHERE rating = 'G' AND rental_duration >= 7;
+```
+Wowza, that just filtered out 971 of the 1000 rows in the film table!
+This clause contains two _filter conditions_, but you can include as many as you want with the keywords `AND`,`OR`, and `NOT`.
+When separating using the AND operator, all conditions must be true to be included in the result set.
+When using the OR operator, only one of the conditions must be true. This OR is inclusive.
+ That is, if you ask for:
+```
+SELECT title FROM film WHERE rating = 'G' OR rental_duration >= 7;
+```
+You will get three kinds of films: rated G, rated G and whose rental duration is over 7 days, rental duration is over 7 days.
+If you need to use both AND and OR operators, you should group the conditions with parentheses much like you would any mathematical or logical operation:
+```
+SELECT title, rating, rental_duration FROM film WHERE (rating = 'G' AND rental_duration >= 7) OR (rating = 'PG-13' AND rental_duration < 4);
+```
+You should always group conditions with parentheses so that you, the database server, and anyone modifying your code all know what's going on without a question.
+### The group by and having clauses
+If you want to manipulate your data a bit, you can use these clauses. `GROUP BY` groups data by column values.
+For example if you want to find all customers who have rented 40 or more films (frequent customers!) You can just group the rentals by customer, then
+return only those whose `rental_count >= 40`. When using group by you can also use `having`, which filters grouped data in the same way `where` filters raw data.
+```
+mysql> SELECT customer.first_name, customer.last_name, count(*)
+    -> FROM customer
+    -> INNER JOIN rental
+    -> ON customer.customer_id = rental.customer_id
+    -> GROUP BY customer.first_name, customer.last_name
+    -> HAVING count(*) >= 40;
+```
+These clauses are so advanced so we're going to wait until a later chapter to really get into them.
+### The order by clause
+In general, rows returned are in no particular order. If you want your result sorted you will need to specify.
+This clause is a means to sort your result set using either raw column data or expressions based on column data.
+As an example we can use an earlier query:
+```
+mysql> SELECT c.first_name, c.last_name, time(r.rental_date) rental_time
+    -> FROM customer c
+    -> INNER JOIN rental r
+    -> ON c.customer_id = r.customer_id
+    -> WHERE date(r.rental_date) = '2005-06-14'
+    -> ORDER BY c.last_name;
+```
+Voila, the results are ordered by last name. If you want to order by first A then B as it were, add another clause like so
+```
+mysql> SELECT c.first_name, c.last_name, time(r.rental_date) rental_time
+    -> FROM customer c
+    -> INNER JOIN rental r
+    -> ON c.customer_id = r.customer_id
+    -> WHERE date(r.rental_date) = '2005-06-14'
+    -> ORDER BY c.last_name, c.first_name;
+```
+Then John Smith will appear after Jane Smith and all will be well.
+#### Ascending vs descending sort order
+The default is _ascending_, that is, earliest or primary first. So A-Z, 1-10, 10/10/1980-10/10/10/1990
+A _descending_ order would mean last to first, so Z-A etc.
+Descending sorts are most commonly used for ranking queries, e.g. "show me the top 5 account balances". If that's the case MySQL includes a `limit` clause as well.
+#### Sorting via Numeric Placeholders
+If you're sorting using the colums in your `select` clause you can reference the columns by their position in the clause rather than by name.
+This can be useful if you're sorting on an expression. The previous example can function as an example here as well:
+```
+mysql> SELECT c.first_name, c.last_name, time(r.rental_date) rental_time
+    -> FROM customer c
+    -> INNER JOIN rental r
+    -> ON c.customer_id = r.customer_id
+    -> WHERE date(r.rental_date) = '2005-06-14'
+    -> ORDER BY 3 desc;
+```
+This is, of course, barely readable. Adding a column to the select clause without changing the numbers in the order-by clause can lead to unexpected results--that is, it's brittle.
+Maybe you might, for expediency's sake, reference columns positionally when writing ad-hoc queries, but when writing code it's much more future-proof to reference then by name.
+
+# Filtering
+Working with every row in the table is sometimes fine. Maybe you have a temp storage table you want to purge.
+Maybe you need to modify all the rows after adding a new column. Maybe you need every customer's name.
+In these cases you won't need a `where` clause, but most of the time you will. All of SQL's data statements
+except `INSERT` have an optional `WHERE` clause containing one or more _filter conditions_ used to restrict the number
+of rows acted upon by the statement.
+Additionally, `SELECT` has a `HAVING` clause which filters conditions relating to grouped data.
+## Condition Evaluation
+A `where` clause may contain one or more `conditions`, separated by `and`/`or`.
+The `AND` is a logical operator meaning that all the conditions have to evaluate to true in order for it to return true,
+and thus for those rows to be included in the result set.
+The `OR` is an inclusive or, meaning that one or more conditions evaluating to true is enough to return that row in the result set.
+So for example `WHERE favorite_color = 'RED' OR eye_color = 'BLUE'` means that your row can be returned if:
+- Your eyes are blue, but your favorite color is not red
+- Your eyes are not blue, but your favorite color is red
+- Your eyes are blue and your favorite color is red
+As you can see, you get a lot more rows this way.
+### Parentheses
+If you include 3 or more conditions with both `AND and `OR`, you should use parentheses to make your intent clear.
+Otherwise, confusion--whether on the part of the database server or the part of someone reading your code--could occur.
+This statement is clear in its intent:
+```
+`WHERE (favorite_color = 'RED' OR eye_color = 'BLUE') AND last_name = 'YOUNG'`
+The more conditions you have in your clause, the more combinations there are for the server to evaluate.
+### Not
+Look at this bullshit:
+```
+WHERE NOT (first_name = 'STEVEN' OR last_name = 'YOUNG') AND create_date > '2006-01-01'
+```
+Now we're retrieving only rows where the first name is not steven or the last name is not young... 
+The NOT applies to the first set of parentheses in this case.
+That's hard to read, right? It's a weird way of saying find all the customers whose name isn't 'Steven Young'.
+But we can say it like this instead to be clearer:
+```
+WHERE first_name <> 'STEVEN' AND last_name <> 'YOUNG'
+```
+The `<>` is like the ! in Ruby, the symbolic not operator.
+
