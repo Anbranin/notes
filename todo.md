@@ -41,3 +41,6 @@ Only make API calls in the Flex directory:
 Clean up Academic Year model LIKE YOU CAN USE .MONTH and .YEAR METHODS
 
 Get rid of AB_TEST_OPTIONS completely
+
+## Fun ideas
+draw a horsey using only CSS, that'd be cool. But it's kind of uninspiring.

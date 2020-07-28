@@ -149,10 +149,9 @@ When using floating-point you can specify:
  rather it will prevent negative numbers from saving.
 
 #### Temporal Data Types
-
-Information about dates and times. Date, date time, a year, or elapsed time can all be stored.
+Information about dates and times.
+Date, date time, a year, or elapsed time can all be stored.
 Type, Default format, Allowable values
-------
 date, YYYY-MM-DD, 1000-01-01 to 9999-12-31
 datetime, YYYY-MM-DD HH:MI:SS, 1000-01-01 00:00:00.000000 to 9999-12-31 23:59:59.999999
 timestamp, YYYY-MM-DD HH:MI:SS, 1970-01-01 00:00:00.000000 to 2038-01-18 22:14:07.999999
@@ -573,8 +572,8 @@ As you can see, you get a lot more rows this way.
 If you include 3 or more conditions with both `AND and `OR`, you should use parentheses to make your intent clear.
 Otherwise, confusion--whether on the part of the database server or the part of someone reading your code--could occur.
 This statement is clear in its intent:
-```
 `WHERE (favorite_color = 'RED' OR eye_color = 'BLUE') AND last_name = 'YOUNG'`
+
 The more conditions you have in your clause, the more combinations there are for the server to evaluate.
 ### Not
 Look at this bullshit:
