@@ -84,3 +84,36 @@
   - review PR 3508 in round-three, Ben's infraction refactor
   - discuss ST Pax changes with ST admins
   - Help Joe with ST Pax
+## 21st
+  - resolve merge conflicts in Rails MVP
+  - read SQL book intro to FROM clause
+  - make issue/brainstorm adding cell subscription feature to ST Pax
+  - work on ST Pax self-registration, enjoy meeting
+  - remove deprecation warnings
+  - brainstorm ROs viewing passengers
+## 22nd
+  - Research EN1 Hold failure
+  - review Ben's PR for incident datetime changes
+  - combine index views in ST Pax
+  - read SQL book section intro to WHERE clauses
+  - work on update-rails-PR fixing deprecation warnings
+## 23rd
+  - Fix deprecation warnings PR on round-three 3519
+  - review Ben's PR for incident datetime range, run task
+  - review Joe's ST-Pax PR emails
+  - read SQL book section on Having/Group by (introduction)
+  - run EN1 Hold task
+  - brainstorm ST Pax navbar
+  - Review Ben's bus map history feature PR on round-three
+## 24th
+  - Review Ben's bus map PR
+  - finish chapter 2 of SQL book, do exercises
+  - fix RO note not saving
+  - navbar brainstorming
+## 25th
+  - read SQL section
+  - navbar ST pax brainstorming & design
+  - review Ben's TOR PR on umaps-rails
+  - review Joe's ST-pax PR
+  - upgrade ruby on round-three (at least, on one branch)
+  - upgrade Rails to 4.1 on round-three
