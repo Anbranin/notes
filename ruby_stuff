@@ -1,21 +1,19 @@
-`dudes.sort_by(&:name)` == `dudes.sort_by{ |dude| dude.name }` == `dudes.sort{ |a, b| a.name <=> b.name }`
-
-WOW.
-
-fragment = case interval <=> 1
-                when -1 then 'now'
-                when  0 then 'in 1 minute'
-                when  1 then "in #{interval} minutes"
-                end
-
-Anything less than 1 gives you -1, 1 gives you 0, anything greater than 1 gives
-you 1
-So it's "how" you sort things
-In the land before `sort_by` (there was no such land)
-Yep, you can pass sort any block which returns -1 / 0 / 1 and it'll use that to 
-compare and sort pairs of objects in your collection
-
-REquire a file in IRB:
-require './name_of_file'
-or
-load 'name_of_file' (reloads)
+require 'csv'
+CSV.open('pay_seniority_report.csv', 'a') do |row|
+  row << ['name','spire','total hours worked Spring 2020','current pay seniority','date/time of last pay seniority update','user who last updated pay seniority']
+  period = Period.find_by_name('Spring2020')
+  date_range = period.start_date..period.end_date
+  users = User.active.joins(employee_assignments: :daily_assignment)
+    .where(daily_assignments: { date: date_range }).uniq
+  # TODO: don't include trainees or trainee hours
+  users.each do |user|
+    name = user.proper_name
+    spire = user.spire_id
+    hours_worked = user.employee_assignments.active.joins(:daily_assignment)
+      .where(daily_assignments: { date: date_range }).sum(&:length_transit_double)
+    current_pay_seniority = user.pay_seniority.seniority
+    last_update = user.pay_seniority.versions.last.created_at.strftime('%m/%d/%Y %H:%M:%S')
+    who_updated = User.find(user.pay_seniority.versions.last.whodunnit).full_name rescue 'Unknown (IT probably)'
+    row << [name, spire, hours_worked, current_pay_seniority, last_update, who_updated]
+  end
+end

@@ -1,9 +1,9 @@
-# Basics
-The `primary_key` is a column that uniquely identifies a row in the table
-There is a distinction between 'natural' and 'surrogate' keys: A primary key
-of `first_name/last_name` is an example of a 'natural' key. It is a poor choice
-for tracking users, since names can change. The surrogate key of ID is better.
-  QUESTION: is `spire_id` a natural key, since it's an attr of user?
+# SQL Basics
+The `primary_key` is a column that uniquely identifies a row in the table.
+There are both 'natural' and 'surrogate' keys.
+For example, `first_name/last_name` is a natural key. Since it is subject to change
+and non-uniquenes it is a bad one. `ID` is a surrogate key.
+`spire_id` is a good example of a natural key.
 
 "SQL" is not an acronym for anything. In 1970 Dr. E. F. Codd's research lab
 published a paper titled "A Relational Model for Large Shared Data Banks".
@@ -149,9 +149,10 @@ When using floating-point you can specify:
  rather it will prevent negative numbers from saving.
 
 #### Temporal Data Types
-Information about dates and times.
-Date, date time, a year, or elapsed time can all be stored.
+
+Information about dates and times. Date, date time, a year, or elapsed time can all be stored.
 Type, Default format, Allowable values
+------
 date, YYYY-MM-DD, 1000-01-01 to 9999-12-31
 datetime, YYYY-MM-DD HH:MI:SS, 1000-01-01 00:00:00.000000 to 9999-12-31 23:59:59.999999
 timestamp, YYYY-MM-DD HH:MI:SS, 1970-01-01 00:00:00.000000 to 2038-01-18 22:14:07.999999
@@ -481,15 +482,17 @@ Note that you can also use the `AS` keyword when defining aliases but it is not 
 Sometimes you want to retrieve all rows from a table and sometimes not. Most of the time you need a _filter_.
 The `where` clause is the mechanism for filtering out unwanted rows from your result set.
 Like, if we wanted to see only G rated films that can be rented out for at least a week:
-
-`SELECT title FROM film WHERE rating = 'G' AND rental_duration >= 7;`
-
+```
+SELECT title FROM film WHERE rating = 'G' AND rental_duration >= 7;
+```
 Wowza, that just filtered out 971 of the 1000 rows in the film table!
 This clause contains two _filter conditions_, but you can include as many as you want with the keywords `AND`,`OR`, and `NOT`.
 When separating using the AND operator, all conditions must be true to be included in the result set.
 When using the OR operator, only one of the conditions must be true. This OR is inclusive.
  That is, if you ask for:
-`SELECT title FROM film WHERE rating = 'G' OR rental_duration >= 7;`
+```
+SELECT title FROM film WHERE rating = 'G' OR rental_duration >= 7;
+```
 You will get three kinds of films: rated G, rated G and whose rental duration is over 7 days, rental duration is over 7 days.
 If you need to use both AND and OR operators, you should group the conditions with parentheses much like you would any mathematical or logical operation:
 ```
@@ -549,193 +552,5 @@ mysql> SELECT c.first_name, c.last_name, time(r.rental_date) rental_time
 This is, of course, barely readable. Adding a column to the select clause without changing the numbers in the order-by clause can lead to unexpected results--that is, it's brittle.
 Maybe you might, for expediency's sake, reference columns positionally when writing ad-hoc queries, but when writing code it's much more future-proof to reference then by name.
 
-# Filtering
-Working with every row in the table is sometimes fine. Maybe you have a temp storage table you want to purge.
-Maybe you need to modify all the rows after adding a new column. Maybe you need every customer's name.
-In these cases you won't need a `where` clause, but most of the time you will. All of SQL's data statements
-except `INSERT` have an optional `WHERE` clause containing one or more _filter conditions_ used to restrict the number
-of rows acted upon by the statement.
-Additionally, `SELECT` has a `HAVING` clause which filters conditions relating to grouped data.
-## Condition Evaluation
-A `where` clause may contain one or more `conditions`, separated by `and`/`or`.
-The `AND` is a logical operator meaning that all the conditions have to evaluate to true in order for it to return true,
-and thus for those rows to be included in the result set.
-The `OR` is an inclusive or, meaning that one or more conditions evaluating to true is enough to return that row in the result set.
-So for example `WHERE favorite_color = 'RED' OR eye_color = 'BLUE'` means that your row can be returned if:
-- Your eyes are blue, but your favorite color is not red
-- Your eyes are not blue, but your favorite color is red
-- Your eyes are blue and your favorite color is red
-As you can see, you get a lot more rows this way.
-### Parentheses
-If you include 3 or more conditions with both `AND and `OR`, you should use parentheses to make your intent clear.
-Otherwise, confusion--whether on the part of the database server or the part of someone reading your code--could occur.
-This statement is clear in its intent:
-`WHERE (favorite_color = 'RED' OR eye_color = 'BLUE') AND last_name = 'YOUNG'`
-The more conditions you have in your clause, the more combinations there are for the server to evaluate.
-
-### Not
-Look at this bullshit:
-`WHERE NOT (first_name = 'STEVEN' OR last_name = 'YOUNG') AND create_date > '2006-01-01'`
-Now we're retrieving only rows where the first name is not steven or the last name is not young... 
-The NOT applies to the first set of parentheses in this case.
-That's hard to read, right? It's a weird way of saying find all the customers whose name isn't 'Steven Young'.
-But we can say it like this instead to be clearer:
-```
-WHERE first_name <> 'STEVEN' AND last_name <> 'YOUNG'
-```
-The `<>` is like the ! in Ruby, the symbolic not operator.
-
-### Building a Condition
-Now ou know how to evaluate multiple conditions. So what comprises a single condition?
-A condition is made up of one or more _expressions_ combined with one or more _operators_.
-An expression can be:
-- a number
-- a column
-- a string literal
-- a built-in function
-- a subquery
-- a list of expressions
-The operators used within conditions include:
-- comparison operators like `=,!=,<,>,<>,like,in,between`
-- arithmetic operators like `+,-,\*,/`
-
-### Condition Types
-So many ways to filter. You can look for values, sets of values, or ranges.
-Or you can do pattern-matching to look for partial strings.
-#### Equality Conditions
-Most filters are like `column = expression`, for example `SELECT film_id FROM film WHERE title = 'RIVER OUTLAW'`
-Those are called _equality conditions_ because they equate one expression to another.
-You can equate a column to a literal, or a value returned from a subquery.
-#### Inequality Conditions
-Also common are _inequality conditions_ which asserts two expressions are not equal.
-For example
-```
-SELECT c.email
-FROM customer c
-  INNER JOIN rental r
-  ON c.customer_id = r.customer_id
-WHERE date(r.rental_date) <> '2005-06-14'
-```
-Please note that when you build an inequality condition you can use either `<>` or `!` because in this kind of case that is the same.
-#### Data modification with equality conditions
-Let's say the movie rental company wants to remove old account rows once per year. So your task is to grab whatever "old" is and remove those rows.
-You could do
-```
-DELETE FROM rental
-WHERE year(rental_date) = 2004;
-```
-There's a single equality condition there. Or you could do this odd thing:
-```
-DELETE FROM rental WHERE year(rental_date) <> 2005 AND year(rental_date) <> 2006;
-```
-#### Range Conditions
-Also common is finding data between two dates, or before/after a certain date. Maybe ages, whatever. That's where the comparison alligators come in.
-```
-SELECT customer_id, rental_date FROM rental WHERE rental_date < '2005-05-25';
-```
-You could specify a lower range as well:
-```
-SELECT customer_id, rental_date FROM rental WHERE rental_date <='2005-04-03' AND rental_date >= '2005-03-03'
-```
-That's a way of doing `BETWEEN` but we could also use:
-#### The Between Operator
-
-```
-SELECT customer_id, rental_date FROM rental WHERE rental_date BETWEEN '2005-06-14' AND '2005-06-16'
-```
-You _must_ specify the lower limit of the range _before_ the upper limit (after `and`) because otherwise you'll have a negative time range and thus no data will be returned.
-Another thing to remember is that the range for `BETWEEN` is _inclusive_.
-And since you are not specifying the time component of the date, the time defaults to midnight. Rentals occurring on midnight when June 14 begins will be returned, as well as 11:59 on June 15.
-Number ranges are easy:
-```
-SELECT customer_id, payment_date, amount FROM payment WHERE amount BETWEEN 10.0 AND 11.99;
-```
-#### String Ranges
-These are a bit harder. To work with string ranges, you need to know the order of the characters within your character set.
-The order in which the characters within a character set are sorted is called a _collation_.
-
-`SELECT last_name, first_name FROM customer WHERE last_name BETWEEN 'FA' AND 'FR';`
-
-Will return names like Farnsworth, Fennell, and Fox.. But names like Frazier are out of range. WHY?
-#### Membership Conditions
-If you wanted to locate movies that are fine for your kids, maybe with a rating of either G or PG, you could use OR:
-
-`SELECT title, rating FROM film WHERE rating = 'G' OR rating = 'PG';`
-
-But imagine how tedious this would be if you had like, a shit ton of conditions to check! For that we can use `IN`:
-
-`SELECT title, rating FROM film WHERE rating IN ('G','PG');`
-
-We can put however much we want in that IN expression.
-#### Using Subqueries
-Instead of a set of expressions you've written, you can use a subquery to generate a set for you.
-As an example:
-
-`SELECT title, rating FROM film WHERE rating IN (SELECT rating FROM film WHERE title LIKE '%PET%);`
-
-The subquery returns the ratings for films with PET in the name, then the outer query finds all the films with those ratings.
-#### Using NOT IN
-To see if an item does _not_ exist in a set, you can just use something like this:
-`SELECT title, rating FROM film WHERE rating NOT IN ('PG-13','R','NC-17');`
-#### Matching Conditions
-
-Partial string matches are cool. If you wanted to find for example all customers whose last name begins with Q,
-you can use a built-in function that strips the first letter off a column. It's this:
-```
-SELECT last_name, first_name FROM customer WHERE left(last_name, 1)=  'Q';
-```
-Check that shit out. This built-in function does this particular job but what's more flexible is wildcards.
-#### Wildcards
-Using wildcards you can search for any partial match.
-Wildcard characters include:
-- `\_`, which stands for exactly one character, and
-- `%`, which stands for any number of characters (including no characters)
-When building these expressions you use the LIKE operator, like so:
-```
-SELECT last_name, first_name FROM customer WHERE last_name LIKE '_A_T%S';
-```
-That means "one character, then an A, then another character, then a T, then any number of characters, then an S.
-So it will give you names like Matthews, Walters, and Watts.
-#### Regular Expressions
-OH YEAH WE GOT REGEX SUPPORT
-A regular expression is a search expression "on steroids"
-For further reading, consult "Mastering Regular Expressions" by Jeffrey E. F. Friedl.
-How it's done:
-```
-SELECT last_name, first_name FROM customer WHERE last_name REGEXP '^[QY]';
-```
-This is the previous example finding customers whose last name starts with Q or Y.
-Both Oracle and Microsoft SQL Server support regex as well.
-Note that with Oracle, you would use `regexp_like` function instead of the regexp operator in the previous example.
-SQL Server allows regular expressions to be used with the `like` operator.
-#### NULL BITCH
-You know what null means. But remember that you can describe it in different ways:
-- Not applicable (a person doesn't have a last name)
-- Value not yet known (a person is born, but does not have a name yet)
-- Value undefined (An account is created for a product that has not yet been added to the database)
-REMEMBER:
-- An expression can _be_ null, but never _equal_ null. Nothing isn't nothing but it isn't not nothing either.
-- Two nulls are never equal to each other.
-To test whether an expression is null, you use the null operator like:
-```
-SELECT rental_id, customer_id FROM rental WHERE return_date IS NULL;
-```
-That will get you all the rentals that were never returned (no return date, no return)
-Note that you cannot use equals:
-```
-SELECT rental_id, customer_id FROM rental WHERE return_date = NULL;
-```
-Won't return shit, because nothing is equal to null.
-Want to see if there is a value in that bitch?
-```
-SELECT rental_id, customer_id FROM rental WHERE return_date IS NOT NULL;
-```
-Now you'll get all the returned rentals.
-Another potential pitfall of realizing that nothing is ever equal or not equal to null is this. Suppose you were asked to find all rentals that were not returned from May through August of 2005.
-If you wrote this query like so:
-```
-SELECT rental_id, customer_id, return date FROM rental WHERE return_date NOT BETWEEN '2005-05-01' AND '2005-09-01';
-```
-You would get a lot of rows, all of them _with_ a return date. It will not return rentals that have a null return date. Why?
-Because a null return date wasn't returned during that time period, but it was also not _not_ returned during that time period.
-You will need to add an OR clause to that query to get the right answer.
+FURTHER READING:
+- Jukka Korpela on Character Sets
