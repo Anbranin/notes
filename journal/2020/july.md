@@ -110,10 +110,27 @@
   - finish chapter 2 of SQL book, do exercises
   - fix RO note not saving
   - navbar brainstorming
-## 25th
+## 27th
   - read SQL section
   - navbar ST pax brainstorming & design
   - review Ben's TOR PR on umaps-rails
   - review Joe's ST-pax PR
   - upgrade ruby on round-three (at least, on one branch)
   - upgrade Rails to 4.1 on round-three
+## 28th
+  - upload GEO list to server
+  - design ST Pax navbar
+  - SQL book section
+  - Rails 4.1 update
+# 29th
+  - Rails 4.1 update
+  - read SQL book
+  - update CSV key
+  - review Joe's Brochure PR
+  - Make fake issue for Dan
+# 30th
+  - Rails 4.1 update
+  - Review ST Pax PR
+  - Read SQL book
+# 31st
+  - Rails 4.1 update
