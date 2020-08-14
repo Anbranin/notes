@@ -739,3 +739,49 @@ SELECT rental_id, customer_id, return date FROM rental WHERE return_date NOT BET
 You would get a lot of rows, all of them _with_ a return date. It will not return rentals that have a null return date. Why?
 Because a null return date wasn't returned during that time period, but it was also not _not_ returned during that time period.
 You will need to add an OR clause to that query to get the right answer.
+
+# Querying Multiple Tables
+BITCH WE ARE GONNA DO SOME JOINS.
+## What is a JOIN?
+For example tables, customer and address. Customers belong_to one address, so in the `customer` table we got, relevant columns
+`customer_id` and `address_id`. In the address table we have `address_id`. It would be proper to say that `address_id` in customer is the _foreign key_
+that refers to the address table.
+If you wanted to retrieve the names of customers along with their street address, you would have to do a join because the address
+info is stored in the address table.
+The query instructs the server to use the customer.address_id column as the _transportation_ between the customer and address tables.
+You can now use both sets of columns in the result set. _THIS_ is a join.
+*Remember* A foreign key constraint can be optionally created to make sure that the values in one table actually exist in another.
+Like, to make sure that address_id: 6 where there is actually an address with an ID of 6.
+### Cartesian Product
+Now here's a simple JOIN:
+```
+SELECT c.first_name, c.last_name, a.address FROM customer c JOIN address a;
+```
+Now this will definitely work but... Look how we didn't specify HOW the two tables should be joined. If we do not do that, we will get what's called a _cross_ join,
+or the _cartesian product_, which is _every_ permutation of the two tables! (599 customers x 603 addresses = 361,197 results!) 
+### Inner Joins
+Here's our fucking join that's real and works, you need to actually link the tables. That way you'll get a single row for each customer.
+```
+SELECT c.first_name, c.last_name, a.address FROM customer c JOIN address a ON c.address_id = a.address_id;
+```
+Basically you need an `ON` subclause.
+If a value exists for the address_id column in one table but not the other then the join fails for the rows containing that value and excluded from the result set.
+Joins are INNER by default BUT you should get used to being specific.
+Fun fact: If the names of the columns used to join the two tables are identical, you can use the `using` subclause instead of `on`:
+```
+SELECT c.first_name, c.last_name, a.address FROM customer c JOIN address a USING (address_id);
+```
+But it's a shorthand notation that only works in one case so.. better to be explicit and not do that.
+### ANSI Join Syntax
+The notation used throughout this book for joining tables was introduced in the SQL92 version of the ANSI SQL Standard.
+All major databases have adopted this syntax.
+But because these servers have been around since before the release they understand an older syntax as well:
+```
+SELECT c.first_name, a.address FROM customer c, address a WHERE c.address_id = a.address_id
+```
+See no ON subclause. Instead tables are named in the FROM clause separated by commas and the JOIN is caused by a WHERE.
+You can use the older syntax but ANSI syntax has advantages:
+- Join conditions and filter conditions are separated into two different subclauses (on/where) making a query easier to understand
+- The join conditions for each pair of tables are contained in their own ON clause making it less likely that part of a join will be mistakenly omitted
+- Queries that use the SQL92 syntax are portable across db servers--the older syntax is slightly different across different servers
+With more complex queries you can easily see the benefits. If you have any filter conditions.
