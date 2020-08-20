@@ -785,3 +785,5 @@ You can use the older syntax but ANSI syntax has advantages:
 - The join conditions for each pair of tables are contained in their own ON clause making it less likely that part of a join will be mistakenly omitted
 - Queries that use the SQL92 syntax are portable across db servers--the older syntax is slightly different across different servers
 With more complex queries you can easily see the benefits. If you have any filter conditions.
+
+### Joining Three or More Tables
