@@ -787,3 +787,562 @@ You can use the older syntax but ANSI syntax has advantages:
 With more complex queries you can easily see the benefits. If you have any filter conditions.
 
 ### Joining Three or More Tables
+With a three-table join there are two join types in the `from` clause and two `on` subclauses, as you might expect.
+In our database `city` is a separate table from the street address.
+It's accessible in the address table via a `city_id` foreign key.
+To show each customer's city you need to go through the address table like so:
+```
+SELECT c.first_name, c.last_name, ct.city FROM customer c INNER JOIN address a ON c.address_id = a.address_id INNER JOIN city ct ON ct.city_id = a.city_id;
+```
+Woo there we go.
+Note: You can do the joins in any order. SQL is a _non-procedural_ language.
+This means you describe what you want done, but it is the database server who actually decides how to execute it.
+Using statistics gathered from your database objects, the server picks one of the tables as a starting point (the _driving table_).
+Then it decides in which order to join the remaining tables. So the order doesn't matter.
+BUT. If you want them to be joined in a particular order, you can:
+- specify the keyword `straight_join` in MySQL
+- request the `force order` option in SQL Server
+- use the `ordered` or `leading` optimizer hint in Oracle Database.
+For example to tell the mysql server to use the city as the driving table and then join the address then customer tables, you could do:
+```
+SELECT STRAIGHT_JOIN c.first_name, c.last_name, ct.city FROM city ct INNER JOIN address_a ON a.city_id = ct.city_id INNER JOIN customer c ON c.address_id = a.address_id
+```
+
+### Using Subqueries as Tables
+Subqueries are super useful. You can join to them like this:
+```
+SELECT c.first_name, c.last_name, addr.address, addr.city 
+FROM customer c
+  INNER JOIN
+    (SELECT a.address_id, a.address, ct.city
+     FROM address a
+       INNER JOIN city ct
+       ON a.city_id = ct.city_id
+     WHERE a.district = 'California'
+    ) addr
+  ON c.address_id = addr.address_id
+```
+Check that shit out. The subquery, which is in parens, is given the alias `addr`
+and finds all addresses in california, only returning them to be joined with.
+Yes, this query could have been written just by joining 3 tables and not using a subquery,
+but sometimes you do need one, and sometimes it's better performance-wise to use one.
+
+### Using the same table twice
+You may need to join the same table more than once for some queries. This is A-OK, don't get weirded out.
+In our example database actors are related to the films in which they appeared via the `film_actor` table.
+If you want to find all the films in which two actors appeared, you could write a query like this one:
+```
+SELECT f.title FROM film f 
+  INNER JOIN film_actor fa ON f.film_id = fa.film_id
+  INNER JOIN actor a ON fa.actor_id = a.actor_id
+WHERE ((a.first_name = 'CATE' AND a.last_name = 'MCQUEEN')
+  OR (a.first_name = 'CUBA' AND a.last_name = 'BIRCH'));
+```
+This query returns all movies where either actor appeared. If you want all films where BOTH appeared though? Gotta do this:
+```
+SELECT f.title FROM film f
+  INNER JOIN film_actor fa1 
+  ON f.film_id = fa1.film_id
+  INNER JOIN actor a1
+  ON fa1.actor_id = a1.actor_id
+  INNER JOIN film_actor fa2
+  ON f.film_id = fa2.film_id
+  INNER JOIN actor a2
+  ON fa2.actor_id = a2.actor_id
+WHERE (a1.first_name = 'CATE' AND a1.last_name = 'MCQUEEN')
+  AND (a2.first_name = 'CUBA' AND a2.last_name = 'BIRCH');
+```
+This is an example of a query that _requires_ table aliases, since the same tables are used multiple times.
+
+## Self-Joins
+You can join a table to itself! Obviously there can be self-referencing foreign keys like with employee assignments and parents.
+The sample database we're using doesn't contain such a relationship, but we can pretend.
+If the film table included a column `prequel_film_id` it'd be that. How it would go:
+```
+SELECT f.title, f_prnt.title prequel FROM film f INNER JOIN film f_prnt ON f_prnt.film_id = f.prequel_film_id WHERE f.prequel_film_id IS NOT NULL;
+```
+Whee
+
+# Working with Sets
+You can definitely interact with the data in a database one row at a time.
+Buut, relational databases are really all about _sets_. We're going to learn how to combine multiple result sets using various _set operators_.
+## Basics
+In lots of places you learn basic set theory in elementary school.
+Think of two circles named A and B that intersect. The set operation to combine these sets is the `union` operation,
+`A union B`
+The area (usually shaded a different color) where they overlap represents data common to both sets.
+Set theory is a bit uninteresting if the data don't intersect.
+The set operation that is concerned _only_ with the overlap between two data sets is known as the _intersection_.
+`A intersect B`
+The data set generated with this operation is just the area of overlap between the two sets.
+If the two sets have no overlap, then the intersection operation yields an empty set.
+The third operation is the `except` operation. For example
+`A except B`
+is the whole set of A minus any overlap with set B. If the two sets have no overlap,
+obviously the whole set of A is generated by this operation.
+Using these three operations you can generate whatever results you need. Want A and B without the intersection?
+Then it's `(A union B) except (A intersect B)` OR `(A except B) union (B except A)` which is a little harder to understand but, more than one way to skin a cat.
+
+## Set theory in Practice whoooo
+The circles we visualize don't convey anything about what data sets we're dealing with.
+IRL you need to describe the composition of the data sets if they are to be combined.
+As an example, what would happen if you tried to generate a union of the customer and city tables?
+The customer table contains 9 columns of various types. The city table contains just 4, of other varying types.
+The first column in our result set would be a combination of the city.city_id and customer.customer_id.
+The second column would be the combination of the customer.store_id and city.city columns (the second column in each set).
+Some column pairs are easy to combine (like two numeric columns) but how do we combine, say, a numeric and string column?
+And furthermore what do we do with all the extra colums in the customer table that have nothing to combine with?
+No, clearly we need some guidelines for how to perform set operations on two data sets.
+The rules:
+- Both data sets must have the same number of columns
+- The data types of each column across the two sets must be the same (or be able to be converted by the server)
+To perform a set operation, you place a set operator between two `select` statements:
+```
+SELECT 1 num, 'abc' str UNION SELECT 9 num, 'xyz' str;
+```
+Each of the individual queries here yields a data set consisting of a single row having a numeric column and a string column.
+Theset operator tells the database server to combine all rows from the two sets.
+THUS.. the final set includes two rows of two columns.
+
+## Set Operators
+We got three set operators we can use to do a UNION,  EXCEPT, and INTERSECT.
+Each operator has two _flavors_, one that includes duplicates and another that removes it (but not necessarily all of them).
+### The Union Operator
+`union` and `union all` allow you to combine multiple data sets.
+`union` sorts the combined data sets and removes duplicates, `union all` does not.
+with `union all`, the number of rows in the final set will always equal the sum of the number of rows
+in the sets being combined. This operation is the simplest to perform from the server's POV since
+there needs no checking.
+Why would we do this? Well like for example:
+```
+SELECT 'customer' type, c.first_name, c.last_name FROM customer c UNION ALL SELECT 'actor' type, a.first_name, a.last_name FROM actor a;
+```
+You can specify rows and columns and their header like is done above with "customer type" and "actor type" which will give you
+the value in each row of 'customer' as the column header 'type'. It is optional but allows us to see which table they both came from.
+So now we have a list of all the names of both actors and customers.
+Please note that this does NOT remove duplicates. Even if you query the same table twice, the same data will just appear twice.
+
+If you want your table to not have duplicates, use the `union` operator instead:
+```
+SELECT c.first_name, c.last_name
+ FROM customer c 
+ WHERE c.first_name LKE 'J%' AND c.last_name LIKE 'D%' 
+ UNION 
+ SELECT a.first_name, a.last_name
+ FROM actor a
+ WHERE a.first_name LKE 'J%' AND a.last_name LIKE 'D%' 
+```
+### The intersect operator
+
+The ANSI SQL specification includes the intersect operator for performing intersections. BUT. Version 8.0 of MySQL does _not_ implement it.
+That is, no versions of MySQL so far implement the `intersect` operator so this example won't work unless you're using some other sql server.
+
+If two queries in a compound query return nonoverlapping data sets, the intersection will be an empty set.
+```
+SELECT c.first_name, c.last_name FROM customer c
+WHERE c.first_name LIKE '%D' AND c.last_name LIKE 'T%'
+INTERSECT
+SELECT a.first_name, a.last_name FROM actor a
+WHERE a.first_name LIKE '%D' AND a.last_name LIKE 'T%';
+```
+While there are both actors and customers having the initials DT, these sets do not overlap in any way so this would yield an empty set.
+
+However this query would return a single row:
+```
+SELECT c.first_name, c.last_name
+FROM customer c
+WHERE c.first_name LIKE 'J%' AND c.last_name LIKE 'D%'
+INTERSECT
+SELECT a.first_name, a.last_name
+FROM actor a
+WHERE a.first_name LIKE 'J%' AND a.last_name LIKE 'D%';
+```
+Jennifer Davis. The only name found in both queries' result sets.
+ANSI SQL also specifies for an `intersect all` operator, which does not remove duplicates like `intersect` does. But the only database server that implements it is IBM's DB2 Universal Server.
+
+### The except Operator
+The ANSI SQL specification includes the `except` operator but yet again MySQL 8 does not implement it.
+Oracle doesn't either, it uses the non-ANSI-compliant `minus` operator instead.
+The `except` operator returns the first result set minus overlap with the second. We'll use the previous example except with the order reversed:
+```
+SELECT a.first_name, a.last_name
+FROM actor a
+WHERE a.first_name LIKE 'J%' AND a.last_name LIKE 'D%'
+EXCEPT
+SELECT c.first_name, c.last_name
+FROM customer c
+WHERE c.first_name LIKE 'J%' AND c.last_name LIKE 'D%';
+```
+This version includes three rows from the first query.. just not Jennifer Davis, who is found in the results from both queries.
+There's also `except all` but once again only IBM's DB2 Universal Server implements it.
+The `except all` operator is a little tricky, so we need examples to explain how duplicate data is handled.
+Pretend you have two sets of data like this:
+Set A:
+```
+actor_id
+10
+11
+12
+10
+10
+```
+Set B:
+```
+actor_id
+10
+10
+```
+The operation `A except B` would obviously be this:
+```
+11
+12
+```
+which is "which results are in neither result set?
+But the operation `A except all B` would yield this:
+```
+10
+11
+12
+```
+`except` removes all duplicate data. `except all` removes only one ocurrence of duplicate data from set A for every occurrence in set B. 
+## Set Operation Rules
+### Sorting Compound Query Results
+If you want your results sorted you can add the `order by` clause _after_ the last query.
+When specifying column names to order by, you must choose from the column names in the _first_ query of the compound query.
+Frequently, the column names are the same for both, but sometimes not, like so:
+```
+SELECT a.first_name fname, a.last_name lname
+FROM actor a
+WHERE a.first_name LIKE '%J' AND a.last_name LIKE 'D%'
+UNION ALL
+SELECT c.first_name, c.last_name
+FROM customer c
+WHERE c.first_name LIKE 'J%' AND c.last_name LIKE 'D%'
+ORDER BY lname, fname;
+```
+The column names for these two queries are different. If you specified a column ame from the second query, you'd get an error:
+"unown column 'last_name' in 'order clause'" which you've seen before aye?
+You can give the columns in both queries identical column aliases to avoid this issue.
+### Set Operation Precedence
+If you had a compound query with more than 2 queries using different set operators you need to think about the order of operations there.
+Placing your query in different orders can affect the results. Like:
+```
+SELECT a.first_name, a.last_name
+FROM actor a
+WHERE a.first_name LIKE 'J%' AND a.last_name LIKE 'D%'
+UNION ALL
+SELECT a.first_name, a.last_name
+FROM actor a
+WHERE a.first_name LIKE 'M%' AND a.last_name LIKE 'T%'
+UNION
+SELECT c.first_name, c.last_name
+FROM customer c
+WHERE c.first_ncme LIKE 'J%' AND c.lcst_ncme LIKE 'D%'
+```
+This compound query returns sets of nonunique names; the first and second are separated with `union all` while the second and third are separated with `union`.
+If you take a look at the results, you see all unique names. If you reverse the set operators, you will get non-unique names!
+In general, compound queries are evaluated from TOP to BOTTOM, with the caveats:
+- The ANSI SQL specification calls for the `intersect` operator to have precedence over the others
+- You can dictate order by enclosing multiple queries in parentheses
+MySQL doesn't allow parens yet in compound queries but in a different db server, you can wrap to override the top-to-bottom order.
+
+# Data Generation, Manipulation, and Converstion
+So how do you deal with string, numeric, or temporal data? Sometimes you wanna like, do stuff to it.
+The SQL language does not include commands covering this functionality, BUT, there are built-in functions.
+The SQL standard does specify some, but db vendors often do not comply with standard in this case.
+You can download a reference guide for your specific server.
+## Working with String Data
+The following character types are used when working with string data:
+- char
+  Holds fixed-length, blank-padded strings. MySQL allows up to 255 characters. oracle up to 2k, SQL Server up to 8k
+- varchar
+  Holds variable-length strings. MySQL permits 65,535 chars. Oracle (varchar2) allows 4k, SQL Server 8k
+- text (MySQL and SQL Server) or clob (Oracle)
+  Holds very large variable-length strings (generally referred to as documents). MySQL has multiple text types for documents up to 4GB in size.
+  SQL Server has a single text type for documents up to 2GB, Oracle's clob allows up to 128 TB (you heard me). SQL Server 2005 also has the varchar(max)
+  data type and wants you to use that instead of text, which will be removed from the server in some future release.
+To play with this, we can create an example table like so (note the creative column names):
+```
+CREATE TABLE string_tbl (char_fld CHAR(30), vchar_fld VARCHAR(30), text_fld TEXT);
+```
+### String Generation
+The simplest way to populate a char column is a string literal:
+```
+INSERT INTO string_tbl (char_fld, vchar_fld, text_fld) VALUES ('This is char data','This is varchar data','This is text data');
+```
+If you try to insert too long of a string (designated or data-type maximum) the server will throw an exception.
+This is called "Strict Mode" and it is the new default as of MySQL 6. Older versions would truncate and give you a warning.
+This is called "ANSI Mode" and you can check which mode you're in and even change it with these commands:
+```
+SELECT @@session.sql_mode; /* Checks the mode */
+SET sql_mode='ansi'; /* Sets the mode */
+```
+The best way to avoid exceptions or truncation is to make sure your varchar column has a high enough limit.
+This is not wasteful--the server only allocates enough space to store your string.
+### Including Single Quotes
+Strings are demarcted by single quotes, so what if you wanted to include, say, the word "doesn't" in your string?
+The answer is to add an _escape_ to the string so the server ignores it. All three SQL servers allow you to escape
+with another single quote as in:
+```
+UPDATE string_tbl SET text_fld = 'This string didn''t work, but it does now';
+```
+Oracle and MySQL users can also escape with a backslash:
+```
+UPDATE string_tbl SET text_fld = 'This string didn\'t work, but it does now;
+```
+Retrieving the string will show a normal, single quote.
+However, what if you're retrieving the string to add to another program that will read it?
+You'll want to escape the string for this. In MySQL, you can use the built-in function `quote()`,
+which places quotes around the whole string and adds escapes to any single quotes/apostrophes within the string.
+```
+SELECT quote(text_fld) FROM string_tbl;
+```
+> 'This string didn\'t work, but it does now'
+When retrieving data for export, you may want to use the quote function for all non-system-generated character columns (like customer_notes).
+### Including Special Characters
+So what about characters like the ö and é in other languages? SQL Server and MySQL include the built-in function `char()` so you can build from any of the 255 characters in the
+ASCII character set. Oracle users get the `chr()` function. This example retrieves a typed string and its equivalent built via individual characters:
+```
+SELECT 'abcdefg', CHAR(97,98,99,100,101,102,103);
+> +---------+----------------------------------------------------------------+
+| abcdefg | CHAR(97,98,99,100,101,102,103)                                 |
++---------+----------------------------------------------------------------+
+| abcdefg | 0x61626364656667                                               |
++---------+----------------------------------------------------------------+
+1 row in set (0.00 sec)
+```
+See how the 97th character in that set is the letter a?
+I don't really get what's happening here. I know about ASCII.. what does. OMG. What is being displayed? In the book the second row above is just abcdefg, not a hexidecmial number!
+Maybe my encoding is different.
+```
+SELECT CHAR(128,129,130,131,132,133,134,135,136,137);
+```
+Should return:
+```
++-----------------------------------------------+
+| CHAR(128,129,130,131,132,133,134,135,136,137) |
++-----------------------------------------------+
+| Çüéâäàåçêë                                    |
++-----------------------------------------------+
+1 row in set (0.01 sec)
+```
+Mine returns:
+```
++----------------------------------------------------------------------------------------------+
+| CHAR(128,129,130,131,132,133,134,135,136,137)                                                |
++----------------------------------------------------------------------------------------------+
+| 0x80818283848586878889                                                                       |
++----------------------------------------------------------------------------------------------+
+1 row in set (0.00 sec)
+```
+In the book he is using the utf8mb4 character set. You can configure your session for a different character set and you will see a different set of characters.
+Asked Matt about this...
+iHe said it's my character set.
+"No, looks fine. I'll be honest, I might skip this section."
+"you can just use unicode directly in MySQL at this point:"
+"There's no particular reason I can think of that you would want to be using arrays of "extended ascii" codes."
+So I won't skip the section but take abbreviated notes.
+Hoe to Concat:
+`mysql> SELECT CONCAT('danke sch', 'ö', 'n');`
+Note that Oracle users can use the concatenation operator `||` instead of `concat()`
+As in:
+`SELECT 'danke sch' || 'ö' || 'n' FROM dual;`
+And SQL Server doesn't have the concat function so you must use the + operator:
+`SELECT 'danke sch' + 'ö' + 'n';`
+Look babe if you're using a non-accented keyboard, you will need to encode your character set as ASCII or something, or find out how to write them. But chances are you'll never have to go without that particular feature.
+
+### String Manipulation
+Each database server contains many built-ins for manipulating strings.
+#### String functions that return numbers
+We got `.length()` (SQL Server has `len()`):
+```
+SELECT LENGTH(char_fld) char_length, LENGTH(vchar_fld) varchar_length, LENGTH(text_fld) text_length FROM string_tbl;
+```
+And don't be surprised that the length of a `char` field is always the same: Remember it's right-padded with spaces.
+We got `position()` if you want to know where a substring appears in a string (the first time it appears, if more than once):
+```
+SELECT POSITION('characters' IN vchar_fld) FROM string_tbl;
+```
+If the substring can't be found, the function returns zero. YES THAT'S RIGHT.. The first element's position is not zero like in most language's arrays, it's 1. So zero is nowhere.
+If you want to start the search somewhere other than the first character, you use `locate()`:
+```
+SELECT LOCATE('is', vchar_fld, 5) FROM string_tbl;
+```
+This example is asking for the string "is" starging at the 5th character. `locate` is just like `position` in that it allows an optional third parameter.
+Note that Oracle uses `instr()` instead of `position` or `locate`. It can be used with an optional third parameter so mimics either function depending on how many are passed.
+SQL Server has the `charindx()` function, which can accept 2 or 3 arguments also.
+
+A function that has no analog in Oracle Database or SQL is `strcmp()`. It takes two strings as arguments and returns the following:
+- `-1` if the first string comes before the second string in sort order
+- `0` if the strings are identical
+- `1` if the second string comes before the first string in sort order
+This function is case insensitive.
+You can also use `LIKE` in a true/false sense like so:
+```
+SELECT name, name LIKE '%y' ends_in_y FROM category;
+```
+Breaking this query apart, we select the name and that column gives us a name, then we select `name LIKE '%y'` which gives us a row of 0s or 1s depending.
+You can perform more complex pattern matching with the `REGEXP` operator:
+```
+SELECT name, name REGEXP 'y$' ends_in_y FROM category
+```
+The second column of this query returns 1 if the value stored in the name column matches the given regular expression.
+Note that SQL Server and Oracle users can achieve similar results by building `case` expressions (more on that later).
+#### String functions that return strings
+You can modify strings by either extracting part of it, or by adding additional text. Every server contains various functions.
+You got the `concat()` function, in use here to help modify a field:
+```
+UPDATE string_tbl SET text_fld = CONCAT(text_fld, ', but now it is longer')
+```
+You can also use the `concat` function to do a sort of string interpolation like:
+```
+SELECT concat(first_name, ' ', last_name, ' has been a customer since ', date(create_date)) customer_narrative FROM customer;
+```
+The `concat` function can handle expression that returns a string, date, or number.
+Note that Oracle has the concat function but that one will only accept 2 string arguments. To combine multiple strings, you have to use pipes:
+```
+SELECT first_name || ' ' || last_name || ' has been a customer since ' || date(create_date) customer_narrative FROM customer;
+```
+SQL Server has no concat function, or pipes--but it does have `+`.
+If you want to add or replace characters in the middle of a string rather than just the beginning or end, you can use the following functions:
+MySQL's `insert()` takes four arguments: The original string, the position at which to start, the number of characters to replace, and the replacement string.
+`insert(original_string, starting_position, num_replacement_chars, replacement_string)`
+Depending on the value of the third argument, the function may be used to either insert or replace characters in a string.
+Obviously, "replace 0 characters" would not replace anything and just push everything to the right over.
+```
+SELECT INSERT('goodbye world', 9, 0, 'cruel ') string;
+```
+In this example, all characters starting from position 9 are pushed to the right, and the string "cruel" is inserted.
+If the third argument is greater than zero, then that number of characters is replaced with the replacement string: as in:
+```
+SELECT INSERT('goodbye world', 1, 7, 'hello');
+```
+Oracle does not provide a single function like insert, but rather a couple that can do the job:
+The `replace()` function replaces one substring with another:
+`replace(original_string, what_to_replace, replacement_string)`
+```
+SELECT REPLACE('goodbye world', 'goodbye', 'hello') FROM dual;
+```
+Please note that the `replace` function will replace _every_ instance of the search string with the replacement string!
+SQL Server also has the `replace` function and it also includes `stuff()`, that is similar to MySQL's `insert`:
+```
+SELECT STUFF('hello world', 1, 5, 'goodbye cruel')
+```
+Along with insertion, you may need extraction. All three servers include `substring()` (Or, for Oracle, `substr()`:
+`substring(original_string, starting_position, number_of_characters_to_extract`
+```
+SELECT SUBSTRING('goodbye cruel world', 9, 5);
+```
+Note that there are many more functions for manipulating string data. You can look 'em up or whatever.
+### Working with Numeric Data
+ALl the usual arithmetic operators like `+ - * /` are available. Functions will follow order of operations unless parentheses are used.
+Remember that the main concern about storing numeric data is that numbers might be rounded if they are larger than the specified field column size.
+#### Performing Arithmetic Functions
+You will never use any of the specific arithmetic functions, but you can calculate the arc cosine, cosine, sine, tangent, whatever, of anyting you want. look them up if you please.
+Okay, maybe the exponent/square root or whatever of something.. but probably not.
+There are some functions that are less specific and more broadly useful. Such as the `modulo` operator, which is--you guessed it-- the divmod of the SQL world.
+Its method signature is `mod(x,y)` and will give you the remainder of dividing one number into another:
+```
+SELECT MOD(10,4);
+```
+Although it's typically used with integers, real numbers also work just fine and will give you a real answer:
+```
+SELECT MOD(22.75, 5)
+```
+Note that SQL Server has no `mod()` function, it instead uses `%` for finding remainders. Simply write `10 % 4` for example.
+Want to find out what one number raised to the power of a second number is? Use `pow()` (SQL) or `power()` (ORacle and SQL Server).
+```
+SELECT POW(2,8);
+```
+Since computer memory is allocated in chunks of bytes, you can use this function to determine the exact number of bytes in a certain amount of memory:
+```
+SELECT POW(2,10) kilobyte, POW(2,20) megabyte, POW(2,30) gigabyte, POW(2,40) terabyte;
+```
+#### Controlling Number Precision
+Four functions can limit the precision of floating-point numbers:
+- `ceil()`, or `ceiling()` in SQL Server, which rounds up to the nearest integer
+- `floor()`, which rounds down to the nearest integer
+- `round()` which rounds from the midpoint up and under the midpoint down, taking an optional second argument for how many digits to the right of the decimal point you want to display.
+  For example,
+  ```
+  SELECT ROUND(35.6834, 2);
+  => 35.68
+  ```
+- `trunc()` just cuts off anything to the right of the decimal point that you don't want. It also takes an optional second argument for how many digits you want to keep.
+  ```
+  SELECT TRUNC(35.698, 2);
+  => 35.69
+  ```
+  Note that SQL Server has no trunc() function, so the round() function takes an optional third argument that, when present and nonzero, indicates that the numbers should be truncated.
+  If the number is negative, you will k
+Both trunc and round can take a negative number as the second argument, which will round the numbers to the _left_ of the decimal. Why do this? Well, pretend you can only sell candles
+in blocks of 10. If a customer ordered 17, you'd want to do this:
+```
+SELECT ROUND(17, -1), TRUNCATE(17, -1);
+=> 20, 10
+```
+#### Handling Signed Data
+Numeric columns that allow negative values are _signed_, versus ones that only allow positive ones, which are _unsigned_.
+If you want to show people's bank account balances, say, well, you could do this which is weird:
+```
+SELECT account_id, SIGN(balance), ABS(balance) FROM account;
+```
+So the `sign()` function returns -1 if the account balance is negative, and 0 if it is positive. The `abs()` function
+returns the absolute value of the field. So, if the value is -100, the ABS of it would be 100.
+
+### Working with Temporal Data
+Temporal data is.. wow, you know? So many different formats. Like, just think about the ways you can describe a data:
+- Wednesday, June 5, 2019
+- 6/05/2019 2:14:56 P.M. EST
+- 6/05/2019 2:14:56 P.M. EST
+- 1562019 (Julian format)
+- Star date [−4] 97026.79 14:14:56 (Star Trek format)
+The complexity owing to format differences are one thing, but _most_ of the complexity actually has to do with your frame of reference.
+Enter, the TIME ZONE.
+#### Dealing with Time Zones
+People all around the world really want noon to roughly coincide with the sun's peak at their location, so there's never been a serious attempt to make everyone use a universal clock (although that would be tits).
+Instead we slice the world up into _time zones_. Within a zone everyone agrees on a particular time.
+This seems simple enough but add in daylight savings time and it gets dumb. Within some geographic regions, the time is shifted by one hour twice a year
+and some do not do this.
+Even within a single time zone, different regions may not adhere to DST--so the time agrees for one-half of the year, but be different for the other half.
+The computer age has exacerbated the issue because it's not a very computer-friendly cont. people have been dealing with it, however, since the age of naval exploration.
+Since explorers might frequently cross time-zones, they decided to use a common point of reference -- the time of day in Greenwich, England -- for timekeeping in the fifteenth century.
+Enter GMT, or _Greenwich Mean Time_.
+All other time zones can be described by the number of hours' difference from GMT; for example, EST is GMT -5:00, or 5 hours earlier than GMT.
+Today we use _Coordinated Universal Time_, or UTC, or "Universal Time", which is based on the average time of 200 atomic clocks in 50 locations around the world.
+To return the current UTC timestamp use `getutcdate()` for SQL Server and `utc_timestamp()` for MySQL.
+Most DB Servers know the time zone of the server on which they reside and you can modify the time zone if you wanted to.
+Maybe you are located in Colorado but service a company on the East Coast,
+for example. But if you store stock exchange transactions from around the world, you should use UTC.
+
+MySQL stores two different time zone settings: Global and session, which could be different for each user logged in. You can see both settings with
+```
+SELECT @@global.time_zone, @@session.time_zone;
+```
+A value of `system` tells you the server is using the time zone setting from the server on which the database resides. Why is this useful?
+Well, if you're in Colorado and you open a session to a MySQL Server on your client's machine in New Jersey, you might change your session's
+time zone using the following command so that the times make sense to you.
+```
+SET time_zone = 'Europe/Zurich';
+```
+And for Oracle:
+```
+ALTER SESSION TIMEZONE = 'Europe/Zurich'
+```
+You have to figure out what your time zone name is obviously.
+#### Generating Temporal Data
+You can do this in many ways:
+- Copying existing temporal columns (duh)
+- built-in functions
+- building a string representation of the data to have the server evaluate it (needs format knowledge)
+##### String representations of temporal data
+For date format components, see date format component table.
+Each type of column has a default format. If you want to build a string that automatically gets saved as one of these data types, you must use the default format.
+Type, Default Format
+date, YYYY-MM-DD
+datetime, YYYY-MM-DD HH:MI:SS
+timestamp, YYYY-MM-DD HH:MI:SS
+time, HHH:MI:SS
+
+Obviously, hours are in 24 hour format.
+##### String to date conversions

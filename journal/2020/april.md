@@ -14,10 +14,8 @@
   - worked on and merged PR https://github.com/umts/round-three/pull/3338
 ## 6th
   - refactored VehiclesController#fluid_report and the PDF
-
 ## 7th
   - wrote tests for VehiclesController#fluid_report and the Vehicles model
-
 ## 8th
   - finished tests for Vehicles Controller / Model and opened PR https://github.com/umts/round-three/pull/3352
   - started writing SQL for determining people who are on a waitlist and don't have an active permit
@@ -26,6 +24,7 @@
   - worked on open PRS https://github.com/umts/round-three/pull/3352, https://github.com/umts/round-three/pull/3357, https://github.com/umts/round-three/pull/3347k
 ## 10th
   - finished PR https://github.com/umts/round-three/pull/3347
+  - troubleshoot waitlist SQL
 ## 13th
   - work on PR https://github.com/umts/round-three/pull/3321
   - Work on removing people with active permits from waitlist, logic on the hub

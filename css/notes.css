@@ -1,0 +1,26 @@
+/* Centering */
+.parent {
+  display: grid;
+  place-items: center;
+}
+
+/* The child will be centered */
+<div class='parent'>
+  <div class='child'> :) </div>
+</div>
+
+/* Deconstructed Pancake */
+.parent {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.box {
+  flex: 1 1 150px; /* stretching */
+  flex: 0 1 150px; /* no stretching */
+  margin: 5px;
+}
+
+/* see https://www.youtube.com/watch?v=qm0IfG1GyZU&feature=youtu.be
+ * and https://1linelayouts.glitch.me/ for more */
