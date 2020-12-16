@@ -31,4 +31,4 @@ Notes:
     2. Create payroll deduction requests, and run some checks
     3. Send the file to the president's office
 Notes:
-* If you miss Friday, the president's pffice will think we missed it -- email them -- Marcus and Nicole
+* If you miss Friday, the president's office will think we missed it -- email them -- Marcus and Nicole
