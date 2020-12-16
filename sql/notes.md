@@ -1346,3 +1346,51 @@ time, HHH:MI:SS
 
 Obviously, hours are in 24 hour format.
 ##### String to date conversions
+You can use the `cast()` function:
+```
+SELECT CAST('2020-12-01 15:30:00' AS DATETIME);
+```
+You can cast anything, dates, times, just use that syntax. When converting a string to temporal syntax, though, you must provide all the components in the required order.
+MySQL is pretty lenient about what separaters you can use between components, though:
+'2020-12-01 15:30:00' is great
+'2020/12/01 15:30:00' is also great
+'2020,12,01,15,30,00' is just fine too
+'20201201153000' is dandy
+
+##### Functions for Generating Dates
+Is your string not in the proper format already? Well, you can just tell SQL which format it is and use a built-in function like
+```
+UPDATE rental SET return_date = STR_TO_DATE('September 19, 1999', '%M, %d, %Y') WHERE rental_id = 99999;
+```
+There are tables of formats on the internet. Note that the `str_to_date` function returns a datetime, time, or date object depending on the contents of the format string.
+For Oracle, use `to_date()`. SQL Server users get a `convert()` function that's really not flexible--the format string has to comply with one of 21 predefined formats.
+If you just want the current date/time, you can just use a built-in function to get one:
+```
+SELECT CURRENT_DATE(), CURRENT_TIME(), CURRENT_TIMESTAMP();
+```
+The values returned by these functions are in the default format. Oracle has `current_date()` and `current_timestamp()` but not the current_time. SQL Server only has the timestamp one.
+#### Manipulating Temporal Data
+##### Temporal Functions that return dates
+MySQL's `date_add()` function allows you to add any kind of interval (days, months, etc) to a specified date to generate another date.
+For example, want to add a week to today?
+```
+SELECT DATE_ADD(CURRENT_DATE(), INTERVAL 7 DAY);
+```
+The second argument is composed of 3 elements: The interval keyword, the quantity, and the type of interval.
+Common types include: second, minute, hour, day, month, year, minute_second (separated by :), hour_second (same), year_month (separated by `-`).
+So like, if you were told "hey that rental was actually returned a little later (3 hours, 27 minutes, and 11 seconds) than specified, you need to fix it,
+you could do this:
+```
+UPDATE rental SET return_date = DATE_ADD(return_date, INTERVAL '3:27:11' HOUR_SECOND) WHERE rental_id = 99999;
+```
+sick.
+Or if you figure out that an employee is actually younger than he said by 9 years and 5 months:
+```
+UPDATE employee SET birth_date = DATE_ADD(birth_date, INTERVAL '9-5' YEAR_MONTH) WHERE emp_id = 4789;
+```
+Note that SQL Server uses `dateadd` instead, and oracle just as `ADD_MONTHS` that takes in two arguments, what to add it to, and the number of months.
+You can select the last day of a month by using `last_day` and passing in a date using the format YYYY-MM-DD. You can pass in a datetime but it'll return a date.
+```
+SELECT LAST_DAY('2020-12-12');
+```
+##### Temporal Functions that return strings
