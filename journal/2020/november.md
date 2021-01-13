@@ -51,3 +51,9 @@
 ## 23rd
 - Troubleshoot Accident Query
 - Update JQuery on round-three
+## 30th
+- check that on-campus students are over 5k in number, no not yet. email Ted.
+- cleanup shifts index JS
+- review Matt's double-render PR
+- fix r3 PR #3763
+- read SQL book

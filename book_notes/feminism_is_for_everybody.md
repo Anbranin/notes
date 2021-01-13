@@ -66,3 +66,11 @@ really beween two women. Two men can be buddies, two women just fight.
 WHy?
 Because I never saw enough movies growing up that passed the bechdel test. I never saw women being friends in media. Anyways back to the notes.
 
+## Consciousness-Raising
+## A constant change of heart
+All women aren't feminists (duh)
+Males benefit more than females from the patriarchy--but females still take part in it and are inculcated in its ideals.
+Therefore to be true feminists, women must raise hteir consciousness.
+Learning about patriarchy as a system of domination/how it's perpetuated and maintained is important.
+Early on the feminist movement was largely about women releasing pent-up hostility and rage about being victimized. This is therapeutic and served to bring important ideas to conscious thought.
+
