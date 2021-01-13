@@ -229,7 +229,9 @@ REFERENCES person (id));
 ```
 Things to note: 
 - To guarantee uniqueness of the table, you must use two keys, since a person can have more than one favorite food (so there will be more than one row with the same person's ID),
-- a foreign key constraint can only allow values in the person_id column that correspond to values in the ID table of person. That is, if there isn't a person with an ID of 100, you cannot have
+- a foreign key constraint can only allow values in the person_id column that correspond to values in the ID table of person. That is, if there isn't a person with an ID of 100, you cannot have The rest of the string is tossed away. We are, though, given a warning to let us know about this.
+Note that if you want to convert a string to a date, time, or datetime, you have to use the default formats. `cast()` functions cannot accept format strings. If your string is not of the
+correct format, you can just use `str_to_date()` or something.
 that as a value in your new table. If you forget to add this constraint, you can add it later with `ALTER TABLE`
 
 ### Table Modification
@@ -315,7 +317,7 @@ pink and purple with an enum, if we try to set it to blue we'll get `ERROR 1265 
 If you don't give mysql the date format it's expecting, you'll get an `Incorrect date value: 'DEC-21-1985'` for example. That's not the right format.
 However you don't need to rely on the default format; you can tell MySQL exactly what format you're using.
 ```
-UPDATE person SET birth_date = str_to-date('DEC-21-1985', '%b-%d-%Y') WHERE id = 1;
+UPDATE person SET birth_date = str_to_date('DEC-21-1985', '%b-%d-%Y') WHERE id = 1;
 ```
 Here are some other date format types you'll need:
 ```
@@ -1394,3 +1396,99 @@ You can select the last day of a month by using `last_day` and passing in a date
 SELECT LAST_DAY('2020-12-12');
 ```
 ##### Temporal Functions that return strings
+Want to extract a portion of a date or time? We gotchu. MySQL includes the `dayname()` function for example to determine which DOW. Example:
+```
+SELECT DAYNAME('2019-09-18');
+```
+There are many functions but the `extract()` function is the most flexible. It's also been implemented by Oracle Database.
+You use it the same way you use `date_add()`. For example:
+```
+SELECT EXTRACT(YEAR FROM '2019-09-18 22:13:04');
+```
+Note that SQL Server doesn't have extract, but it has `datepart()`:
+```
+SELECT DATEPART(YEAR, GETDATE())
+```
+##### Temporal Functions that Return Numbers
+You can take two dates and return the interval between them (number of days, weeks, years, etc). MySQL has the `datediff()` function which returns the number of full days between two dates.
+For example if you want to know how long my summer vacation is you could do:
+```
+SELECT DATEDIFF('2021-09-01','2021-06-01');
+```
+Note that the second date is the first argument. Switching the arguments would give you a negative number.
+This function ignores time of day completely, therefore you could pass in a `datetime` as an argument and it would make no difference.
+Note that SQL Server has the `datediff` function too but you can specify the interval type so it's more flexible. Like so: `SELECT DATEDIFF(DAY, '2021-03-04', '2021-02-01')`
+In Oracle you simply subtract one date from the other and it will give you the number of days.
+
+
+### Conversion Functions
+Every db server includes some built-in functions to convert data from one type to another. The `cast()` function is a good one and is included in MySQL, Oracle, and SQL Server.
+To use it, provide a value/expression and the type to which you want the value converted. Such as:
+```
+SELECT CAST('123' AS SIGNED INTEGER);
+```
+`cast()` converts from left to right. If in this example a non-numeric character were found, the conversion would stop without error. So this:
+```
+SELECT CAST('123r5' AS SIGNED INTEGER);
+```
+Would give us "123". The rest of the string is tossed away. We are, though, given a warning to let us know about this.
+Note that if you want to convert a string to a date, time, or datetime, you have to use the default formats. `cast()` functions cannot accept format strings. If your string is not of the
+correct format, you can just use `str_to_date()` or something.
+
+# Grouping and Aggregates
+Data might be stored in one way--a very granular way--but perhaps you want to view it differently. Perhaps in.. grouping and aggregates.
+## Grouping Concepts
+So for an example of this we can think about a query someone might want to run. If you want to know which customers have rented the most films so you could give them a coupon, you _could_
+run this query and get the information: `SELECT customer_id FROM rental;`. That would give you what you need, technically.
+But, of course, that's too many records to parse by just reading it. We have 599 customers and 16,000 rental records. You could paste it in excel, but what if we could get SQL to do the work?
+Well, if you group the rentals by customer ID you'll get back a result set with one row for each customer instead of 16k rows.
+```
+SELECT customer_id FROM rental GROUP BY customer_id;
+```
+This is nice, but it doesn't tell us what we want. For that we use an `aggregate function`. To see how many films each customer rented, use the `count()` function.
+```
+SELECT customer_id, count(*) FROM rental GROUP BY customer_id;
+```
+`count()` counts the number of rows in each _grouping_. The asterisk tells the server to count everything in the group.
+Now, in this query we're just interested in looking at which customers have rented the most films, we didn't define how many customers we wanted returned (and in this query it would be
+inappropriate, we have no idea what our data looks like). So we just want to look at all of them. We can tell at a glance what we need to know if we just add an ORDER BY clause:
+```
+SELECT customer_id, count(*) FROM rental GROUP BY customer_id ORDER BY 2 desc;
+```
+That orders by the count.. which is column 2 I guess?
+With sorted results you can see who has rented the fewest and most films at a glance.
+If you want to filter out some undesired data -- say you know you don't want anyone with under 40 films as a rental count -- you need to filter based on grouping data.
+That is, the `group by` clause runs _after_ the `where` clause so you _cannot add filter conditions to your where clause_. So for example this:
+```
+SELECT customer_id, count(*) FROM rental WHERE count(*) >= 40 GROUP BY customer_id ORDER BY 2 desc;
+```
+will not work.
+You can't refer to your aggregate function `count(*)` in your `where` clause because the groups _have not yet been generated_ when you reach that line. Capice?
+But don't despair, you can filter using the `having` clause:
+```
+SELECT customer_id, count(*) FROM rental GROUP BY customer_id ORDER BY 2 desc HAVING count(*) >= 40;
+```
+Now your query will do what you want.
+
+## Aggregate Functions
+These functions perform an operation over all rows in a _group_. Every db server has its own set but there are common functions across all the major ones:
+- `max()` returns the maximum value in a set
+- `min()` returns the minimum value in a set
+- `avg()` returns the average value of a set
+- `sum()` returns the sum of all values in a set
+- `count()` returns the number of values in a set
+Example query to use all of them:
+```
+SELECT MAX(amount) max_amnt, MIN(amount) min_amnt, AVG(amount) avg_amnt, SUM(amount) total_amnt, COUNT(*) num_payments FROM payment;
+```
+Now we get the results we want with the headers max_amnt, min_amnt, etc.
+### Implicit vs Explicit Groups
+If there's no `group by` clause there's by default a single _implicit_ group, which is all rows of the payment table in the previous case, for example.
+But you probably want additional columns. Like what if you wanted the previous query to execute the same aggregate functions, but for _each_ customer instead of all?
+In this case you'd want to retrieve the customer_id column as well. But of course if you just `SELECT customer_id, MAX ... FROM PAYMENT`, you'll get an error:
+`In aggregated query without GROUP BY, expression #1 of SELECT list contains nonaggregated column`
+You have to _explicitly_ say how you want the data to be grouped or SQL will not know what you are talking about:
+```
+SELECT customer_id, MAX(amount) max_amnt, MIN(amount) min_amnt, AVG(amount) avg_amnt, SUM(amount) total_amnt, COUNT(*) num_payments FROM payment GROUP BY customer_id;
+```
+Oh snap. Now the server knows to group together rows having the same value in the `customer_id` column, and then to apply the five aggregate functions to each of those groups.
