@@ -7,6 +7,7 @@
 - Add Time-Type as a model
 
 ## Later
+- read regex book
 - email that sells permit -- link to entity
 - jobapps - make sure issue is made. Need two columns "offered job" and "actually started working"
 - custom flex error messages mapping numbers to human readable strings?
